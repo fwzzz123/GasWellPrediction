@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.UserMapper">
+
+
+    <select id="selectByIds" resultType="com.proj.entity.User" >
+        SELECT * FROM "user" WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+       </foreach>
+    </select>
+
+    <!-- 查询所有用户 -->
+    <select id="selectAll" resultType="com.proj.entity.User">
+        SELECT * FROM "user"
+    </select>
+
+    <!-- 根据 ID 查询用户 -->
+    <select id="selectById" resultType="com.proj.entity.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <!-- 插入用户 -->
+    <insert id="insert" parameterType="com.proj.entity.User">
+        INSERT INTO user (name, age, email)
+        VALUES (#{name}, #{age}, #{email})
+    </insert>
+
+    <!-- 更新用户 -->
+    <update id="updateById" parameterType="com.proj.entity.User">
+        UPDATE user
+        SET name = #{name}, age = #{age}, email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="deleteById" parameterType="Long">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+</mapper>
