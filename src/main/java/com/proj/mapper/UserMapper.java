@@ -2,10 +2,12 @@ package com.proj.mapper;
 
 
 import com.proj.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface UserMapper {
     List<User> selectByIds(List<Long> ids);
 

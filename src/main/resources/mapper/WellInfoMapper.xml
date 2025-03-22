@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.WellInfo">
+            <id property="wellId" column="Well_ID" jdbcType="VARCHAR"/>
+            <result property="reservoirId" column="Reservoir_ID" jdbcType="INTEGER"/>
+            <result property="capacity" column="Capacity" jdbcType="NUMERIC"/>
+            <result property="wellName" column="Well_Name" jdbcType="VARCHAR"/>
+            <result property="wellType" column="Well_Type" jdbcType="VARCHAR"/>
+            <result property="wellStatus" column="Well_Status" jdbcType="VARCHAR"/>
+            <result property="wellCoordinates" column="Well_Coordinates" jdbcType="VARCHAR"/>
+            <result property="completionDate" column="Completion_Date" jdbcType="DATE"/>
+            <result property="section" column="Section" jdbcType="NUMERIC"/>
+            <result property="thicknessContent" column="Thickness_Content" jdbcType="NUMERIC"/>
+            <result property="mudContent" column="Mud_Content" jdbcType="NUMERIC"/>
+            <result property="porositySaturation" column="Porosity_Saturation" jdbcType="NUMERIC"/>
+            <result property="waterCut" column="Water_Cut" jdbcType="NUMERIC"/>
+            <result property="permeableThickness" column="Permeable_Thickness" jdbcType="NUMERIC"/>
+            <result property="equivalentHydrocarbons" column="Equivalent_Hydrocarbons" jdbcType="NUMERIC"/>
+            <result property="conclusion" column="Conclusion" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Well_ID,Reservoir_ID,Capacity,
+        Well_Name,Well_Type,Well_Status,
+        Well_Coordinates,Completion_Date,Section,
+        Thickness_Content,Mud_Content,Porosity_Saturation,
+        Water_Cut,Permeable_Thickness,Equivalent_Hydrocarbons,
+        Conclusion
+    </sql>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellInfoDescriptionMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.WellInfoDescription">
+            <id property="descriptionId" column="Description_ID" jdbcType="OTHER"/>
+            <result property="wellId" column="Well_ID" jdbcType="VARCHAR"/>
+            <result property="dev" column="DEV" jdbcType="NUMERIC"/>
+            <result property="azim" column="AZIM" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Description_ID,Well_ID,DEV,
+        AZIM
+    </sql>
+</mapper>
