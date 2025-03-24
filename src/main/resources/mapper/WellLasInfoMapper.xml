@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellLasInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.WellLasInfo">
+            <id property="lasInfoId" column="Las_Info_ID" jdbcType="OTHER"/>
+            <result property="wellId" column="Well_ID" jdbcType="VARCHAR"/>
+            <result property="strt" column="STRT" jdbcType="VARCHAR"/>
+            <result property="stop" column="STOP" jdbcType="VARCHAR"/>
+            <result property="step" column="STEP" jdbcType="VARCHAR"/>
+            <result property="absentValue" column="Absent_Value" jdbcType="VARCHAR"/>
+            <result property="comp" column="COMP" jdbcType="VARCHAR"/>
+            <result property="well" column="WELL" jdbcType="VARCHAR"/>
+            <result property="fld" column="FLD" jdbcType="VARCHAR"/>
+            <result property="loc" column="LOC" jdbcType="VARCHAR"/>
+            <result property="ctry" column="CTRY" jdbcType="VARCHAR"/>
+            <result property="prov" column="PROV" jdbcType="VARCHAR"/>
+            <result property="srvc" column="SRVC" jdbcType="VARCHAR"/>
+            <result property="date" column="DATE" jdbcType="VARCHAR"/>
+            <result property="uwi" column="UWI" jdbcType="VARCHAR"/>
+            <result property="cnty" column="CNTY" jdbcType="VARCHAR"/>
+            <result property="stat" column="STAT" jdbcType="VARCHAR"/>
+            <result property="api" column="API" jdbcType="VARCHAR"/>
+            <result property="lic" column="LIC" jdbcType="VARCHAR"/>
+            <result property="lati" column="LATI" jdbcType="VARCHAR"/>
+            <result property="wellLong" column="Well_LONG" jdbcType="VARCHAR"/>
+            <result property="gdat" column="GDAT" jdbcType="VARCHAR"/>
+            <result property="run" column="RUN" jdbcType="VARCHAR"/>
+            <result property="pdat" column="PDAT" jdbcType="VARCHAR"/>
+            <result property="epd" column="EPD" jdbcType="VARCHAR"/>
+            <result property="lmf" column="LMF" jdbcType="VARCHAR"/>
+            <result property="apd" column="APD" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Las_Info_ID,Well_ID,STRT,
+        STOP,STEP,Absent_Value,
+        COMP,WELL,FLD,
+        LOC,CTRY,PROV,
+        SRVC,DATE,UWI,
+        CNTY,STAT,API,
+        LIC,LATI,Well_LONG,
+        GDAT,RUN,PDAT,
+        EPD,LMF,APD
+    </sql>
+</mapper>

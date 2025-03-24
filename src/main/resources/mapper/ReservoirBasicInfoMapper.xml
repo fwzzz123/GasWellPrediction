@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.ReservoirBasicInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.ReservoirBasicInfo">
+            <id property="reservoirId" column="Reservoir_ID" jdbcType="INTEGER"/>
+            <result property="reservoirName" column="Reservoir_Name" jdbcType="VARCHAR"/>
+            <result property="location" column="Location" jdbcType="VARCHAR"/>
+            <result property="formationType" column="Formation_Type" jdbcType="VARCHAR"/>
+            <result property="depth" column="Depth" jdbcType="NUMERIC"/>
+            <result property="porosity" column="Porosity" jdbcType="NUMERIC"/>
+            <result property="permeability" column="Permeability" jdbcType="NUMERIC"/>
+            <result property="reservoirPressure" column="Reservoir_Pressure" jdbcType="NUMERIC"/>
+            <result property="oilViscosity" column="Oil_Viscosity" jdbcType="NUMERIC"/>
+            <result property="initialOilInPlace" column="Initial_Oil_In_Place" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Reservoir_ID,Reservoir_Name,Location,
+        Formation_Type,Depth,Porosity,
+        Permeability,Reservoir_Pressure,Oil_Viscosity,
+        Initial_Oil_In_Place
+    </sql>
+</mapper>

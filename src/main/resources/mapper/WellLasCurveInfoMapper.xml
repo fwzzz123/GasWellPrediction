@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellLasCurveInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.WellLasCurveInfo">
+            <id property="curveInfoId" column="Curve_Info_ID" jdbcType="OTHER"/>
+            <result property="lasInfoId" column="Las_Info_ID" jdbcType="INTEGER"/>
+            <result property="dept" column="DEPT" jdbcType="NUMERIC"/>
+            <result property="ao10" column="AO10" jdbcType="NUMERIC"/>
+            <result property="ao20" column="AO20" jdbcType="NUMERIC"/>
+            <result property="ao60" column="AO60" jdbcType="NUMERIC"/>
+            <result property="ao90" column="AO90" jdbcType="NUMERIC"/>
+            <result property="aplc" column="APLC" jdbcType="NUMERIC"/>
+            <result property="bs" column="BS" jdbcType="NUMERIC"/>
+            <result property="cals" column="CALS" jdbcType="NUMERIC"/>
+            <result property="dt" column="DT" jdbcType="NUMERIC"/>
+            <result property="dts" column="DTS" jdbcType="NUMERIC"/>
+            <result property="dt4p" column="DT4P" jdbcType="NUMERIC"/>
+            <result property="dtc" column="DTC" jdbcType="NUMERIC"/>
+            <result property="gr" column="GR" jdbcType="NUMERIC"/>
+            <result property="pefl" column="PEFL" jdbcType="NUMERIC"/>
+            <result property="rhom" column="RHOM" jdbcType="NUMERIC"/>
+            <result property="vpvs" column="VPVS" jdbcType="NUMERIC"/>
+            <result property="sigf" column="SIGF" jdbcType="NUMERIC"/>
+            <result property="a16h" column="A16H" jdbcType="NUMERIC"/>
+            <result property="a22h" column="A22H" jdbcType="NUMERIC"/>
+            <result property="a28h" column="A28H" jdbcType="NUMERIC"/>
+            <result property="a34h" column="A34H" jdbcType="NUMERIC"/>
+            <result property="a40h" column="A40H" jdbcType="NUMERIC"/>
+            <result property="cal" column="CAL" jdbcType="NUMERIC"/>
+            <result property="cncf" column="CNCF" jdbcType="NUMERIC"/>
+            <result property="k" column="K" jdbcType="NUMERIC"/>
+            <result property="kth" column="KTH" jdbcType="NUMERIC"/>
+            <result property="m2r1" column="M2R1" jdbcType="NUMERIC"/>
+            <result property="m2r2" column="M2R2" jdbcType="NUMERIC"/>
+            <result property="m2r3" column="M2R3" jdbcType="NUMERIC"/>
+            <result property="m2r6" column="M2R6" jdbcType="NUMERIC"/>
+            <result property="m2r9" column="M2R9" jdbcType="NUMERIC"/>
+            <result property="m2rx" column="M2RX" jdbcType="NUMERIC"/>
+            <result property="pe" column="PE" jdbcType="NUMERIC"/>
+            <result property="rop5Rm" column="ROP5_RM" jdbcType="NUMERIC"/>
+            <result property="sp" column="SP" jdbcType="NUMERIC"/>
+            <result property="th" column="TH" jdbcType="NUMERIC"/>
+            <result property="u" column="U" jdbcType="NUMERIC"/>
+            <result property="zcor" column="ZCOR" jdbcType="NUMERIC"/>
+            <result property="zden" column="ZDEN" jdbcType="NUMERIC"/>
+            <result property="bit" column="BIT" jdbcType="NUMERIC"/>
+            <result property="phit" column="PHIT" jdbcType="NUMERIC"/>
+            <result property="pign" column="PIGN" jdbcType="NUMERIC"/>
+            <result property="rhgf" column="RHGF" jdbcType="NUMERIC"/>
+            <result property="suwi" column="SUWI" jdbcType="NUMERIC"/>
+            <result property="sxwi" column="SXWI" jdbcType="NUMERIC"/>
+            <result property="vcl" column="VCL" jdbcType="NUMERIC"/>
+            <result property="spsbdh" column="SPSBDH" jdbcType="NUMERIC"/>
+            <result property="bfv" column="BFV" jdbcType="NUMERIC"/>
+            <result property="cmff" column="CMFF" jdbcType="NUMERIC"/>
+            <result property="drho" column="DRHO" jdbcType="NUMERIC"/>
+            <result property="dtco" column="DTCO" jdbcType="NUMERIC"/>
+            <result property="dtsm" column="DTSM" jdbcType="NUMERIC"/>
+            <result property="hcal" column="HCAL" jdbcType="NUMERIC"/>
+            <result property="ksdr" column="KSDR" jdbcType="NUMERIC"/>
+            <result property="ktim" column="KTIM" jdbcType="NUMERIC"/>
+            <result property="p16h" column="P16H" jdbcType="NUMERIC"/>
+            <result property="p22h" column="P22H" jdbcType="NUMERIC"/>
+            <result property="p28h" column="P28H" jdbcType="NUMERIC"/>
+            <result property="p34h" column="P34H" jdbcType="NUMERIC"/>
+            <result property="p40h" column="P40H" jdbcType="NUMERIC"/>
+            <result property="pefz" column="PEFZ" jdbcType="NUMERIC"/>
+            <result property="rhoz" column="RHOZ" jdbcType="NUMERIC"/>
+            <result property="rop5" column="ROP5" jdbcType="NUMERIC"/>
+            <result property="tcmr" column="TCMR" jdbcType="NUMERIC"/>
+            <result property="tnph" column="TNPH" jdbcType="NUMERIC"/>
+            <result property="cmrp3ms" column="CMRP3MS" jdbcType="NUMERIC"/>
+            <result property="grarc" column="GRARC" jdbcType="NUMERIC"/>
+            <result property="swirr" column="SWIRR" jdbcType="NUMERIC"/>
+            <result property="spdh" column="SPDH" jdbcType="NUMERIC"/>
+            <result property="dzod" column="DZOD" jdbcType="NUMERIC"/>
+            <result property="dvod" column="DVOD" jdbcType="NUMERIC"/>
+            <result property="ten" column="TEN" jdbcType="NUMERIC"/>
+            <result property="ac" column="AC" jdbcType="NUMERIC"/>
+            <result property="cnc" column="CNC" jdbcType="NUMERIC"/>
+            <result property="den" column="DEN" jdbcType="NUMERIC"/>
+            <result property="rfoc" column="RFOC" jdbcType="NUMERIC"/>
+            <result property="rild" column="RILD" jdbcType="NUMERIC"/>
+            <result property="rilm" column="RILM" jdbcType="NUMERIC"/>
+            <result property="cgr" column="CGR" jdbcType="NUMERIC"/>
+            <result property="ild" column="ILD" jdbcType="NUMERIC"/>
+            <result property="ilm" column="ILM" jdbcType="NUMERIC"/>
+            <result property="msfl" column="MSFL" jdbcType="NUMERIC"/>
+            <result property="nphi" column="NPHI" jdbcType="NUMERIC"/>
+            <result property="pef" column="PEF" jdbcType="NUMERIC"/>
+            <result property="pota" column="POTA" jdbcType="NUMERIC"/>
+            <result property="rhob" column="RHOB" jdbcType="NUMERIC"/>
+            <result property="thor" column="THOR" jdbcType="NUMERIC"/>
+            <result property="uran" column="URAN" jdbcType="NUMERIC"/>
+            <result property="sgr" column="SGR" jdbcType="NUMERIC"/>
+            <result property="abgt" column="ABGT" jdbcType="NUMERIC"/>
+            <result property="acal" column="ACAL" jdbcType="NUMERIC"/>
+            <result property="batc" column="BATC" jdbcType="NUMERIC"/>
+            <result property="pore" column="PORE" jdbcType="NUMERIC"/>
+            <result property="sbd2" column="SBD2" jdbcType="NUMERIC"/>
+            <result property="seda" column="SEDA" jdbcType="NUMERIC"/>
+            <result property="sedc" column="SEDC" jdbcType="NUMERIC"/>
+            <result property="sedp" column="SEDP" jdbcType="NUMERIC"/>
+            <result property="semc" column="SEMC" jdbcType="NUMERIC"/>
+            <result property="semp" column="SEMP" jdbcType="NUMERIC"/>
+            <result property="sesc" column="SESC" jdbcType="NUMERIC"/>
+            <result property="sesp" column="SESP" jdbcType="NUMERIC"/>
+            <result property="sexc" column="SEXC" jdbcType="NUMERIC"/>
+            <result property="sexp" column="SEXP" jdbcType="NUMERIC"/>
+            <result property="sgrc" column="SGRC" jdbcType="NUMERIC"/>
+            <result property="splf" column="SPLF" jdbcType="NUMERIC"/>
+            <result property="sw" column="SW" jdbcType="NUMERIC"/>
+            <result property="srop" column="SROP" jdbcType="NUMERIC"/>
+            <result property="dtcp" column="DTCP" jdbcType="NUMERIC"/>
+            <result property="dtsd" column="DTSD" jdbcType="NUMERIC"/>
+            <result property="dtsp" column="DTSP" jdbcType="NUMERIC"/>
+            <result property="port" column="PORT" jdbcType="NUMERIC"/>
+            <result property="shsi" column="SHSI" jdbcType="NUMERIC"/>
+            <result property="tvd" column="TVD" jdbcType="NUMERIC"/>
+            <result property="drhb" column="DRHB" jdbcType="NUMERIC"/>
+            <result property="drhl" column="DRHL" jdbcType="NUMERIC"/>
+            <result property="drhr" column="DRHR" jdbcType="NUMERIC"/>
+            <result property="drhu" column="DRHU" jdbcType="NUMERIC"/>
+            <result property="robb" column="ROBB" jdbcType="NUMERIC"/>
+            <result property="robl" column="ROBL" jdbcType="NUMERIC"/>
+            <result property="robr" column="ROBR" jdbcType="NUMERIC"/>
+            <result property="robu" column="ROBU" jdbcType="NUMERIC"/>
+            <result property="tnpb" column="TNPB" jdbcType="NUMERIC"/>
+            <result property="tvdRc" column="TVD_RC" jdbcType="NUMERIC"/>
+            <result property="grma" column="GRMA" jdbcType="NUMERIC"/>
+            <result property="crpm" column="CRPM" jdbcType="NUMERIC"/>
+            <result property="dcav" column="DCAV" jdbcType="NUMERIC"/>
+            <result property="dcho" column="DCHO" jdbcType="NUMERIC"/>
+            <result property="dcve" column="DCVE" jdbcType="NUMERIC"/>
+            <result property="p16l" column="P16L" jdbcType="NUMERIC"/>
+            <result property="p22l" column="P22L" jdbcType="NUMERIC"/>
+            <result property="p28l" column="P28L" jdbcType="NUMERIC"/>
+            <result property="p40l" column="P40L" jdbcType="NUMERIC"/>
+            <result property="a16l" column="A16L" jdbcType="NUMERIC"/>
+            <result property="a22l" column="A22L" jdbcType="NUMERIC"/>
+            <result property="a28l" column="A28L" jdbcType="NUMERIC"/>
+            <result property="a34l" column="A34L" jdbcType="NUMERIC"/>
+            <result property="a40l" column="A40L" jdbcType="NUMERIC"/>
+            <result property="peb" column="PEB" jdbcType="NUMERIC"/>
+            <result property="pel" column="PEL" jdbcType="NUMERIC"/>
+            <result property="per" column="PER" jdbcType="NUMERIC"/>
+            <result property="peu" column="PEU" jdbcType="NUMERIC"/>
+            <result property="sifa" column="SIFA" jdbcType="NUMERIC"/>
+            <result property="tabArcRes" column="TAB_ARC_RES" jdbcType="NUMERIC"/>
+            <result property="tabDen" column="TAB_DEN" jdbcType="NUMERIC"/>
+            <result property="tabGr" column="TAB_GR" jdbcType="NUMERIC"/>
+            <result property="tabNeu" column="TAB_NEU" jdbcType="NUMERIC"/>
+            <result property="sbdc" column="SBDC" jdbcType="NUMERIC"/>
+            <result property="sco2" column="SCO2" jdbcType="NUMERIC"/>
+            <result property="scor" column="SCOR" jdbcType="NUMERIC"/>
+            <result property="sdde" column="SDDE" jdbcType="NUMERIC"/>
+            <result property="sfb2" column="SFB2" jdbcType="NUMERIC"/>
+            <result property="sgra" column="SGRA" jdbcType="NUMERIC"/>
+            <result property="sgrb" column="SGRB" jdbcType="NUMERIC"/>
+            <result property="snb2" column="SNB2" jdbcType="NUMERIC"/>
+            <result property="snfa" column="SNFA" jdbcType="NUMERIC"/>
+            <result property="snna" column="SNNA" jdbcType="NUMERIC"/>
+            <result property="snp2" column="SNP2" jdbcType="NUMERIC"/>
+            <result property="snpe" column="SNPE" jdbcType="NUMERIC"/>
+            <result property="stem" column="STEM" jdbcType="NUMERIC"/>
+            <result property="calp" column="CALP" jdbcType="NUMERIC"/>
+            <result property="dtcr" column="DTCR" jdbcType="NUMERIC"/>
+            <result property="dtdr" column="DTDR" jdbcType="NUMERIC"/>
+            <result property="dtpc" column="DTPC" jdbcType="NUMERIC"/>
+            <result property="grpcl" column="GRPCL" jdbcType="NUMERIC"/>
+            <result property="poredt" column="POREDT" jdbcType="NUMERIC"/>
+            <result property="atmp" column="ATMP" jdbcType="NUMERIC"/>
+            <result property="hord" column="HORD" jdbcType="NUMERIC"/>
+            <result property="verd" column="VERD" jdbcType="NUMERIC"/>
+            <result property="vw" column="VW" jdbcType="NUMERIC"/>
+            <result property="vxo" column="VXO" jdbcType="NUMERIC"/>
+            <result property="grbz" column="GRBZ" jdbcType="NUMERIC"/>
+            <result property="sdea" column="SDEA" jdbcType="NUMERIC"/>
+            <result property="abga" column="ABGA" jdbcType="NUMERIC"/>
+            <result property="abgb" column="ABGB" jdbcType="NUMERIC"/>
+            <result property="abgc" column="ABGC" jdbcType="NUMERIC"/>
+            <result property="tvde" column="TVDE" jdbcType="NUMERIC"/>
+            <result property="grArc" column="GR_ARC" jdbcType="NUMERIC"/>
+            <result property="pdGravBhc" column="PD_GRAV_BHC" jdbcType="NUMERIC"/>
+            <result property="p34l" column="P34L" jdbcType="NUMERIC"/>
+            <result property="tabArc" column="TAB_ARC" jdbcType="NUMERIC"/>
+            <result property="rpmAdn" column="RPM_ADN" jdbcType="NUMERIC"/>
+            <result property="aco" column="ACO" jdbcType="NUMERIC"/>
+            <result property="acq" column="ACQ" jdbcType="NUMERIC"/>
+            <result property="cht" column="CHT" jdbcType="NUMERIC"/>
+            <result property="cn" column="CN" jdbcType="NUMERIC"/>
+            <result property="cnlo" column="CNLO" jdbcType="NUMERIC"/>
+            <result property="corr" column="CORR" jdbcType="NUMERIC"/>
+            <result property="deno" column="DENO" jdbcType="NUMERIC"/>
+            <result property="lsd" column="LSD" jdbcType="NUMERIC"/>
+            <result property="lsn" column="LSN" jdbcType="NUMERIC"/>
+            <result property="perm" column="PERM" jdbcType="NUMERIC"/>
+            <result property="rto" column="RTO" jdbcType="NUMERIC"/>
+            <result property="ssd" column="SSD" jdbcType="NUMERIC"/>
+            <result property="ssn" column="SSN" jdbcType="NUMERIC"/>
+            <result property="swb" column="SWB" jdbcType="NUMERIC"/>
+            <result property="dgr" column="DGR" jdbcType="NUMERIC"/>
+            <result property="nucp" column="NUCP" jdbcType="NUMERIC"/>
+            <result property="sfxe" column="SFXE" jdbcType="NUMERIC"/>
+            <result property="gre" column="GRE" jdbcType="NUMERIC"/>
+            <result property="appc" column="APPC" jdbcType="NUMERIC"/>
+            <result property="rop" column="ROP" jdbcType="NUMERIC"/>
+            <result property="sema" column="SEMA" jdbcType="NUMERIC"/>
+            <result property="sesa" column="SESA" jdbcType="NUMERIC"/>
+            <result property="sexa" column="SEXA" jdbcType="NUMERIC"/>
+            <result property="wrm" column="WRM" jdbcType="NUMERIC"/>
+            <result property="scrd" column="SCRD" jdbcType="NUMERIC"/>
+            <result property="htem" column="HTEM" jdbcType="NUMERIC"/>
+            <result property="rxo" column="RXO" jdbcType="NUMERIC"/>
+            <result property="rt" column="RT" jdbcType="NUMERIC"/>
+            <result property="rm" column="RM" jdbcType="NUMERIC"/>
+            <result property="rla5" column="RLA5" jdbcType="NUMERIC"/>
+            <result property="rla4" column="RLA4" jdbcType="NUMERIC"/>
+            <result property="rla3" column="RLA3" jdbcType="NUMERIC"/>
+            <result property="rla2" column="RLA2" jdbcType="NUMERIC"/>
+            <result property="rla1" column="RLA1" jdbcType="NUMERIC"/>
+            <result property="pr" column="PR" jdbcType="NUMERIC"/>
+            <result property="dt1" column="DT1" jdbcType="NUMERIC"/>
+            <result property="cnl" column="CNL" jdbcType="NUMERIC"/>
+            <result property="por" column="POR" jdbcType="NUMERIC"/>
+            <result property="rtHrlt" column="RT_HRLT" jdbcType="NUMERIC"/>
+            <result property="rxoHrlt" column="RXO_HRLT" jdbcType="NUMERIC"/>
+            <result property="rmHrlt" column="RM_HRLT" jdbcType="NUMERIC"/>
+            <result property="cali" column="CALI" jdbcType="NUMERIC"/>
+            <result property="tten" column="TTEN" jdbcType="NUMERIC"/>
+            <result property="cnce" column="CNCE" jdbcType="NUMERIC"/>
+            <result property="sw4" column="SW4" jdbcType="NUMERIC"/>
+            <result property="swdz" column="SWDZ" jdbcType="NUMERIC"/>
+            <result property="rla0" column="RLA0" jdbcType="NUMERIC"/>
+            <result property="hdra" column="HDRA" jdbcType="NUMERIC"/>
+            <result property="sw7" column="SW7" jdbcType="NUMERIC"/>
+            <result property="hdar" column="HDAR" jdbcType="NUMERIC"/>
+            <result property="rxoz" column="RXOZ" jdbcType="NUMERIC"/>
+            <result property="acbz" column="ACBZ" jdbcType="NUMERIC"/>
+            <result property="cncb" column="CNCB" jdbcType="NUMERIC"/>
+            <result property="denb" column="DENB" jdbcType="NUMERIC"/>
+            <result property="grc" column="GRC" jdbcType="NUMERIC"/>
+            <result property="kcs" column="KCS" jdbcType="NUMERIC"/>
+            <result property="pcf" column="PCF" jdbcType="NUMERIC"/>
+            <result property="pcs" column="PCS" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Curve_Info_ID,Las_Info_ID,DEPT,
+        AO10,AO20,AO60,
+        AO90,APLC,BS,
+        CALS,DT,DTS,
+        DT4P,DTC,GR,
+        PEFL,RHOM,VPVS,
+        SIGF,A16H,A22H,
+        A28H,A34H,A40H,
+        CAL,CNCF,K,
+        KTH,M2R1,M2R2,
+        M2R3,M2R6,M2R9,
+        M2RX,PE,ROP5_RM,
+        SP,TH,U,
+        ZCOR,ZDEN,BIT,
+        PHIT,PIGN,RHGF,
+        SUWI,SXWI,VCL,
+        SPSBDH,BFV,CMFF,
+        DRHO,DTCO,DTSM,
+        HCAL,KSDR,KTIM,
+        P16H,P22H,P28H,
+        P34H,P40H,PEFZ,
+        RHOZ,ROP5,TCMR,
+        TNPH,CMRP3MS,GRARC,
+        SWIRR,SPDH,DZOD,
+        DVOD,TEN,AC,
+        CNC,DEN,RFOC,
+        RILD,RILM,CGR,
+        ILD,ILM,MSFL,
+        NPHI,PEF,POTA,
+        RHOB,THOR,URAN,
+        SGR,ABGT,ACAL,
+        BATC,PORE,SBD2,
+        SEDA,SEDC,SEDP,
+        SEMC,SEMP,SESC,
+        SESP,SEXC,SEXP,
+        SGRC,SPLF,SW,
+        SROP,DTCP,DTSD,
+        DTSP,PORT,SHSI,
+        TVD,DRHB,DRHL,
+        DRHR,DRHU,ROBB,
+        ROBL,ROBR,ROBU,
+        TNPB,TVD_RC,GRMA,
+        CRPM,DCAV,DCHO,
+        DCVE,P16L,P22L,
+        P28L,P40L,A16L,
+        A22L,A28L,A34L,
+        A40L,PEB,PEL,
+        PER,PEU,SIFA,
+        TAB_ARC_RES,TAB_DEN,TAB_GR,
+        TAB_NEU,SBDC,SCO2,
+        SCOR,SDDE,SFB2,
+        SGRA,SGRB,SNB2,
+        SNFA,SNNA,SNP2,
+        SNPE,STEM,CALP,
+        DTCR,DTDR,DTPC,
+        GRPCL,POREDT,ATMP,
+        HORD,VERD,VW,
+        VXO,GRBZ,SDEA,
+        ABGA,ABGB,ABGC,
+        TVDE,GR_ARC,PD_GRAV_BHC,
+        P34L,TAB_ARC,RPM_ADN,
+        ACO,ACQ,CHT,
+        CN,CNLO,CORR,
+        DENO,LSD,LSN,
+        PERM,RTO,SSD,
+        SSN,SWB,DGR,
+        NUCP,SFXE,GRE,
+        APPC,ROP,SEMA,
+        SESA,SEXA,WRM,
+        SCRD,HTEM,RXO,
+        RT,RM,RLA5,
+        RLA4,RLA3,RLA2,
+        RLA1,PR,DT1,
+        CNL,POR,RT_HRLT,
+        RXO_HRLT,RM_HRLT,CALI,
+        TTEN,CNCE,SW4,
+        SWDZ,RLA0,HDRA,
+        SW7,HDAR,RXOZ,
+        ACBZ,CNCB,DENB,
+        GRC,KCS,PCF,
+        PCS
+    </sql>
+</mapper>

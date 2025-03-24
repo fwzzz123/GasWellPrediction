@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="kingbase_Data Source - test@192.168.31.87" uuid="f2e2fdc4-530e-4508-8fd2-40b426cbbe9e">
+      <driver-ref>java.sql.Driver</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.kingbase8.Driver</jdbc-driver>
+      <jdbc-url>jdbc:kingbase8://192.168.31.87:54321/test</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>

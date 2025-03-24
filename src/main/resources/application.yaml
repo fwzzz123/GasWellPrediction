@@ -14,16 +14,19 @@
 #    username: SYSTEM
 #    password: 123456
 
+
 spring:
   datasource:
     driver-class-name: com.kingbase8.Driver
     username: SYSTEM
     password: 123456
+
     url: jdbc:kingbase8://192.168.221.135:54321/mydb?useUnicode=true&characterEncoding=UTF-8
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 100MB
+
 
 logging:
   level:
