@@ -1,11 +1,14 @@
 package com.proj.controller;
 
 
-import com.proj.entity.WellLasInfo;
+import com.proj.entity.WellLAS;
+import com.proj.service.WellInfoService;
 import com.proj.service.WellLasCurveInfoService;
 import com.proj.service.WellLasInfoService;
 import com.proj.utils.NamingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,50 +24,48 @@ import java.util.Map;
 @RequestMapping("/import")
 @CrossOrigin//支持跨域
 public class LASController {
-    private String LasFile = "rightLasFile";
-
     @Autowired
     private WellLasInfoService wellLasInfoService;
 
     @Autowired
     private WellLasCurveInfoService wellLasCurveInfoService;
 
-    @GetMapping("/getlas")
-    public String getLasFile(){
-        return LasFile;
+    @Autowired
+    private WellInfoService wellInfoService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            WellLAS wellLAS = new WellLAS();
+            wellLAS.setName(file.getOriginalFilename());
+            wellLAS.setLasFile(file.getBytes());  // 获取文件二进制内容
+
+//            int result = lasMapper.insertWellLAS(wellLAS);  // 调用 MyBatis 插入操作
+
+            int result = wellInfoService.insertWellLAS(wellLAS);
+
+            if (result > 0) {
+                return ResponseEntity.ok("文件上传并存入数据库成功，井ID：" + wellLAS.getId());
+            } else {
+                return ResponseEntity.status(500).body("文件上传失败");
+            }
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("文件上传失败: " + e.getMessage());
+        }
     }
+
 //
-//    private static final String UPLOAD_DIR = "/root/LAS";
-//
-//
-//    @PostMapping("/upload")
-//    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-//
-//        System.out.println("收到上传请求：" + file.getOriginalFilename());
-//
-//        if (file.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("上传失败，文件为空");
-//        }
-//
-//        try {
-//            // 确保上传目录存在
-//            File uploadDir = new File(UPLOAD_DIR);
-//            if (!uploadDir.exists()) {
-//                uploadDir.mkdirs();
-//            }
-//
-//            // 目标文件路径
-//            String filePath = UPLOAD_DIR + file.getOriginalFilename();
-//            File destFile = new File(filePath);
-//
-//            // 保存文件
-//            file.transferTo(destFile);
-//            return ResponseEntity.ok("文件上传成功: " + file.getOriginalFilename());
-//
-//        } catch (IOException e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("文件上传失败: " + e.getMessage());
-//        }
-//    }
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) {
+        WellLAS file = wellInfoService.getById(id);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + file.getName() + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(file.getLasFile());
+    }
+
+
     @PostMapping("/getlasinfo")
     public ResponseEntity<String> getLasInfo(@RequestParam("files") List<MultipartFile> files){
         //Map<String, String> wellInfoMap = new LinkedHashMap<>();

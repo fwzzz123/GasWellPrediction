@@ -2,6 +2,7 @@ package com.proj.service;
 
 import com.proj.entity.WellInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.proj.entity.WellLAS;
 
 /**
 * @author L
@@ -10,4 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface WellInfoService extends IService<WellInfo> {
 
+    public int insertWellLAS(WellLAS wellLAS);
+
+    public WellLAS getById(Long id);
 }

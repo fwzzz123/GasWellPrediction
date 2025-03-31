@@ -1,4 +1,4 @@
-mydb:
+test:
   db:
     host: 192.168.221.1333
     pwd: 123
