@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <option name="projectDefaultTargetUuid" value="5d3c3221-bf25-4e5e-af88-592ea5d72786" />
+    <targets>
+      <target name="root@192.168.3.12:2201" type="ssh/sftp" uuid="5d3c3221-bf25-4e5e-af88-592ea5d72786">
+        <config>
+          <option name="projectRootOnTarget" value="/root/MavenTest" />
+          <option name="serverName" value="root@192.168.3.12:2201 password" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="homePath" value="/lib/jvm/java-1.8.0-openjdk-1.8.0.402.b06-0.p01.ky10.p01.x86_64/jre" />
+            <option name="javaVersionString" value="1.8.0_402" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>

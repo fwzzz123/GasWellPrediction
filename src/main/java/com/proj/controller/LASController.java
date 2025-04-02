@@ -1,7 +1,7 @@
 package com.proj.controller;
 
 
-import com.proj.entity.WellLAS;
+import com.proj.entity.po.WellLasPO;
 import com.proj.service.WellInfoService;
 import com.proj.service.WellLasCurveInfoService;
 import com.proj.service.WellLasInfoService;
@@ -36,28 +36,21 @@ public class LASController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            WellLAS wellLAS = new WellLAS();
-            wellLAS.setName(file.getOriginalFilename());
-            wellLAS.setLasFile(file.getBytes());  // 获取文件二进制内容
+            WellLasPO wellLasPO = new WellLasPO();
+            wellLasPO.setName(file.getOriginalFilename());
+            wellLasPO.setLasFile(file.getBytes());  // 获取文件二进制内容
 
-//            int result = lasMapper.insertWellLAS(wellLAS);  // 调用 MyBatis 插入操作
+            wellInfoService.insertWellLAS(wellLasPO);
 
-            int result = wellInfoService.insertWellLAS(wellLAS);
-
-            if (result > 0) {
-                return ResponseEntity.ok("文件上传并存入数据库成功，井ID：" + wellLAS.getId());
-            } else {
-                return ResponseEntity.status(500).body("文件上传失败");
-            }
+            return ResponseEntity.ok("文件上传并存入数据库成功，井ID：" + wellLasPO.getId());
         } catch (IOException e) {
             return ResponseEntity.status(500).body("文件上传失败: " + e.getMessage());
         }
     }
 
-//
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) {
-        WellLAS file = wellInfoService.getById(id);
+        WellLasPO file = wellInfoService.getById(id);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + file.getName() + "\"")

@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace = "com.proj.mapper.LASMapper">
 <!--    插入文件数据-->
-    <insert id = "insertWellLAS" parameterType="com.proj.entity.WellLAS">
+    <insert id = "insertWellLAS" parameterType="com.proj.entity.po.WellLasPO">
         INSERT INTO "wellLas" (name, las_file)
         VALUES (#{name}, #{lasFile})
     </insert>
 
 <!--    根据ID 查文件-->
-    <select id="getWellLASById" resultType="com.proj.entity.WellLAS">
+    <select id="getWellLASById" resultType="com.proj.entity.po.WellLasPO">
         SELECT id, name, las_file
         FROM "wellLas"
         WHERE id = #{id}

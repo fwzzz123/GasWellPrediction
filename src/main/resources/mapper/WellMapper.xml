@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.proj.mapper.WellMapper">
+
+    <!-- 插入数据 -->
+    <insert id="insertWell" parameterType="com.proj.entity.po.WellPO">
+        INSERT INTO Well (well_name, well_type, well_capacity, gas_reservoir, created_at, updated_at)
+        VALUES (#{wellName}, #{wellType}, #{wellCapacity}, #{gasReservoir}, NOW(), NOW());
+    </insert>
+
+    <select id="getAllWellNames" resultType="com.proj.entity.po.WellPO">
+        SELECT DISTINCT well_name FROM Well;
+    </select>
+
+
+</mapper>

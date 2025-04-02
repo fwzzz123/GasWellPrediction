@@ -13,4 +13,9 @@ public interface WellLasInfoService extends IService<WellLasInfo> {
 
     int savelas(Map<String, String> wellInfoMap);
 
+    /**
+     * 从 Well_Las_Info 表中提取 WELL 列数据，检查是否已存在于 Well 表中，若不存在则插入
+     * @return 插入成功的井数量
+     */
+
 }

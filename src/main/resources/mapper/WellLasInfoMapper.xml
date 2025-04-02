@@ -45,4 +45,25 @@
         GDAT,RUN,PDAT,
         EPD,LMF,APD
     </sql>
+
+    <select id="getAllWellNames" resultType="java.lang.String">
+        SELECT DISTINCT WELL FROM Well_Las_Info;
+    </select>
+
+    <update id="updateWellIdInLasInfo" >
+        UPDATE Well_Las_Info wli
+        SET Well_ID = (
+            SELECT w.Well_ID
+            FROM Well w
+            WHERE w.well_name = wli.well_name
+        )
+        WHERE EXISTS (
+            SELECT 1
+            FROM Well w
+            WHERE w.well_name = wli.well_name
+        )
+    </update>
+
+
+
 </mapper>

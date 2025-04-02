@@ -2,8 +2,9 @@ package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.proj.entity.WellLasInfo;
-import com.proj.service.WellLasInfoService;
 import com.proj.mapper.WellLasInfoMapper;
+import com.proj.mapper.WellMapper;
+import com.proj.service.WellLasInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
     @Autowired
     private WellLasInfoMapper wellLasInfoMapper;
 
+    @Autowired
+    private WellMapper wellMapper;
+
     @Override
     public int savelas(Map<String, String> wellInfoMap) {
         WellLasInfo wellLasInfo = new WellLasInfo();
@@ -34,6 +38,8 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
         wellLasInfoMapper.insert(wellLasInfo);
         return (int) wellLasInfo.getLasInfoId();
     }
+
+
 
 
 }

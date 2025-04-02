@@ -1,6 +1,6 @@
 package com.proj.mapper;
 
-import com.proj.entity.WellLAS;
+import com.proj.entity.po.WellLasPO;
 import org.apache.ibatis.annotations.Mapper;
 
 ;
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LASMapper {
 
-    int insertWellLAS(WellLAS wellLAS);
+    int insertWellLAS(WellLasPO wellLasPO);
 
-    WellLAS getWellLASById(Long id);
+    WellLasPO getWellLASById(Long id);
 }

@@ -1,4 +1,4 @@
-package com.proj.entity;
+package com.proj.entity.po;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @TableName("wellLas")
-public class WellLAS {
+public class WellLasPO {
     @TableField("id")
     private long id;
 
