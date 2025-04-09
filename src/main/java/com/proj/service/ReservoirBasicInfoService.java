@@ -3,6 +3,8 @@ package com.proj.service;
 import com.proj.entity.ReservoirBasicInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author L
 * @description 针对表【Reservoir_Basic_Info】的数据库操作Service
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface ReservoirBasicInfoService extends IService<ReservoirBasicInfo> {
 
+    List<ReservoirBasicInfo> getReservoirs();
 }

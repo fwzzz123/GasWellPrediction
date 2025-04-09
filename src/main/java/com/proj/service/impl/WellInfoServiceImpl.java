@@ -28,6 +28,8 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfo> i
 
     @Autowired
     private LASMapper lasMapper;
+    @Autowired
+    private WellInfoMapper wellInfoMapper;
 
     @Autowired
     private WellLasInfoMapper wellLasInfoMapper;
@@ -88,6 +90,16 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfo> i
             }
         }
         return insertedCount;
+    }
+
+    @Override
+    public WellInfo getByWellId(String wellId) {
+        return (wellInfoMapper.getByWellId(wellId));
+    }
+
+    @Override
+    public void insert(WellInfo wellInfo) {
+        wellInfoMapper.insert(wellInfo);
     }
 }
 

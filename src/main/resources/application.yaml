@@ -19,7 +19,7 @@ spring:
   datasource:
     driver-class-name: com.kingbase8.Driver
     username: SYSTEM
-    password: 654321
+    password: 123456
 
 #spring:
 #  datasource:
@@ -27,13 +27,12 @@ spring:
 #    username: SYSTEM
 #    password: 123456
 
-    url: jdbc:kingbase8://192.168.3.12:54321/test?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:kingbase8://192.168.31.87:54321/test?useUnicode=true&characterEncoding=UTF-8
 #    url: jdbc:kingbase8://192.168.221.135:54321/mydb?useUnicode=true&characterEncoding=UTF-8
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 100MB
-
 
 logging:
   level:
@@ -42,3 +41,5 @@ logging:
     dateformat: HH:mm:ss
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
+server:
+  port: 8081

@@ -1,5 +1,6 @@
 package com.proj.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.proj.entity.WellLasCurveInfo;
 import com.proj.service.WellLasCurveInfoService;
@@ -99,6 +100,13 @@ public class WellLasCurveInfoServiceImpl extends ServiceImpl<WellLasCurveInfoMap
 
     }
 
+    @Override
+    public List<WellLasCurveInfo> getCurveByLasInfoId(int lasInfoId) {
+        LambdaQueryWrapper<WellLasCurveInfo> lambdaQuery = new LambdaQueryWrapper<>();
+        lambdaQuery.eq(WellLasCurveInfo::getLasInfoId, lasInfoId);
+
+        return wellLasCurveInfoMapper.selectList(lambdaQuery);
+    }
 
 
     public WellLasCurveInfo mapToEntity(Map<String,String> curveInfoMap,int lasInfoId){

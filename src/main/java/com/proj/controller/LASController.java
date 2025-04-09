@@ -1,6 +1,7 @@
 package com.proj.controller;
 
 
+import com.proj.entity.WellInfo;
 import com.proj.entity.po.WellLasPO;
 import com.proj.service.WellInfoService;
 import com.proj.service.WellLasCurveInfoService;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class LASController {
     @Autowired
     private WellLasInfoService wellLasInfoService;
+
 
     @Autowired
     private WellLasCurveInfoService wellLasCurveInfoService;
@@ -58,7 +60,8 @@ public class LASController {
                 .body(file.getLasFile());
     }
 
-
+    //用户上传las文件，解析las文件内容插入到WellLasInfo和WellLasCurveInfo俩个表中
+    //插入到WellLasInfo表中解决外键问题先看wellId是否存在若不存在则插入WellInfo表中
     @PostMapping("/getlasinfo")
     public ResponseEntity<String> getLasInfo(@RequestParam("files") List<MultipartFile> files){
         //Map<String, String> wellInfoMap = new LinkedHashMap<>();
@@ -81,7 +84,22 @@ public class LASController {
             //boolean inDataBlock = false;
 
             String wellID = file.getOriginalFilename().split("_")[0];
-            wellLasInfoMap.put("Well_ID",wellID);
+            //检验是否存在，不存在则添加到WellInfo表中
+            if(wellInfoService.getByWellId(wellID)==null){
+                WellInfo wellInfo = new WellInfo();
+                wellInfo.setWellId(wellID);
+                if(wellID.startsWith("BD")){
+                    wellInfo.setReservoirId(1);
+                }
+                if(wellID.startsWith("DF1-")){
+                    wellInfo.setReservoirId(2);
+                }
+                if(wellID.startsWith("DF13")){
+                    wellInfo.setReservoirId(3);
+                }
+                wellInfoService.insert(wellInfo);
+            }
+            wellLasInfoMap.put("wellId",wellID);
 
             try(BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))){
                 while ((line = reader.readLine())!=null){
@@ -113,6 +131,9 @@ public class LASController {
                                 }
                                 if(key.equals("long")){
                                     key="wellLong";
+                                }
+                                if(value.equals("")){
+                                    value="null";
                                 }
                                 if (!wellLasInfoMap.containsKey(key)) {
                                     wellLasInfoMap.put(key, value);
