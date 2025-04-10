@@ -1,6 +1,6 @@
 package com.proj.mapper;
 
-import com.proj.entity.WellInfo;
+import com.proj.entity.po.WellInfoPO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 * @Entity com.proj.entity.WellVO
 */
 @Mapper
-public interface WellInfoMapper extends BaseMapper<WellInfo> {
+public interface WellInfoMapper extends BaseMapper<WellInfoPO> {
 
 }
 

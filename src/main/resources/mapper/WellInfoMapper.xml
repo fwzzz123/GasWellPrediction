@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.proj.mapper.WellInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.proj.entity.WellInfo">
+    <resultMap id="BaseResultMap" type="com.proj.entity.po.WellInfoPO">
             <id property="wellId" column="Well_ID" jdbcType="VARCHAR"/>
             <result property="reservoirId" column="Reservoir_ID" jdbcType="INTEGER"/>
             <result property="capacity" column="Capacity" jdbcType="NUMERIC"/>

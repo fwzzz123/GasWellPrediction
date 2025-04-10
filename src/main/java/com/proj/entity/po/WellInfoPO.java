@@ -1,13 +1,13 @@
-package com.proj.entity;
+package com.proj.entity.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 
@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @TableName(value ="Well_Info")
 @Data
-public class WellInfo implements Serializable {
+public class WellInfoPO implements Serializable {
     /**
      * 
      */
@@ -111,7 +111,7 @@ public class WellInfo implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        WellInfo other = (WellInfo) that;
+        WellInfoPO other = (WellInfoPO) that;
         return (this.getWellId() == null ? other.getWellId() == null : this.getWellId().equals(other.getWellId()))
             && (this.getReservoirId() == null ? other.getReservoirId() == null : this.getReservoirId().equals(other.getReservoirId()))
             && (this.getCapacity() == null ? other.getCapacity() == null : this.getCapacity().equals(other.getCapacity()))

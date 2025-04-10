@@ -1,16 +1,17 @@
 package com.proj.controller;
 
+import com.proj.entity.dto.CurveMappingRequest;
+import com.proj.entity.po.WellLogCurveMappingPO;
 import com.proj.service.WellDataReceiveService;
 import com.proj.service.WellDataStorageService;
 import com.proj.service.WellInfoService;
+import com.proj.service.WellLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,6 +22,7 @@ public class WellController {
     private final WellDataReceiveService wellDataReceiveService;
     private final WellDataStorageService wellDataStorageService;
     private final WellInfoService wellInfoService;
+    private final WellLogService wellLogService;
 
     //接受表单数据插入数据库
     @PostMapping("/add")
@@ -34,12 +36,14 @@ public class WellController {
         return result > 0 ? "井数据插入成功！" : "井数据插入失败！";
     }
 
+    //这个服务检查Well_Las_Info表的well_name和Well表的well_name，然后将已有的未插入Well表的函数插入well_name字段
     @RequestMapping("/sync-wells")
     public ResponseEntity<String> syncWellsFromLasInfo() {
         int insertedCount = wellInfoService.insertMissingWells();
         return ResponseEntity.ok("Inserted " + insertedCount + " new wells.");
     }
 
+    //这个函数检查well_Las_Info的外键well_id然后根据well的缺失值，补全表Well_Las_Info的well_id的函数
     @PostMapping("/updateWellLasInfoWithWellID")
     public ResponseEntity<String> updateWellLasInfoWithWellID() {
         try {
@@ -54,4 +58,14 @@ public class WellController {
         }
     }
 
+    //
+    @PostMapping("/saveMatchingwells")
+    public String saveCurveMappingWells(@RequestBody CurveMappingRequest request) {
+        wellLogService.saveMappings(request.getWellLogId(), request.getMappingList());
+        return "保存成功";
+    }
+    @PostMapping("/{wellLogId}")
+    public List<WellLogCurveMappingPO> getMapping(@PathVariable Long wellLogId) {
+        return wellLogService.getMappingsByWellLogId(wellLogId);
+    }
 }

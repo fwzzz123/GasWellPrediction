@@ -1,7 +1,7 @@
 package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.proj.entity.WellLasCurveInfo;
+import com.proj.entity.po.WellLasCurveInfoPO;
 import com.proj.service.WellLasCurveInfoService;
 import com.proj.mapper.WellLasCurveInfoMapper;
 import com.proj.utils.NamingUtils;
@@ -14,7 +14,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,18 +25,24 @@ import java.util.Map;
 * @createDate 2025-03-18 15:07:36
 */
 @Service
-public class WellLasCurveInfoServiceImpl extends ServiceImpl<WellLasCurveInfoMapper, WellLasCurveInfo>
+public class WellLasCurveInfoServiceImpl extends ServiceImpl<WellLasCurveInfoMapper, WellLasCurveInfoPO>
     implements WellLasCurveInfoService{
     @Autowired
     private WellLasCurveInfoMapper wellLasCurveInfoMapper;
 
-
+    //savelas这里要加几个逻辑：首先用户存入las数据时，要返回curveInfoList让用户将选择的数据与我们解析到的las文件对应。这里我们将我们解析的表头传回前端，
+    //然后前端让用户进行数据对应之后传回后端，后端再进行Curve表头与用户选定表头的对应。
+    // 有了这个类之后，进行业务方法的编写。
+    //所以一共是三个步骤
+    //1. 接收请求，将我们解析的表头传回前端
+    //2. 处理前端传回的表头对应数据，构建WellLasCurveMatchInfo数据表，将数据入库
+    //3. 业务逻辑处理
     @Override
     public void savelas(MultipartFile file, int lasInfoId) {
         String line;
         ArrayList<String> curveInfoList = new ArrayList<>();
         Map<String,String> cureveInfoMap= new HashMap<>();
-        List<WellLasCurveInfo> wellLasCurveInfoList = new ArrayList<WellLasCurveInfo>();
+        List<WellLasCurveInfoPO> wellLasCurveInfoList = new ArrayList<WellLasCurveInfoPO>();
         boolean inCurveInformationBlock = false;
         boolean inDataBlock = false;
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))){
@@ -101,8 +106,8 @@ public class WellLasCurveInfoServiceImpl extends ServiceImpl<WellLasCurveInfoMap
 
 
 
-    public WellLasCurveInfo mapToEntity(Map<String,String> curveInfoMap,int lasInfoId){
-        WellLasCurveInfo wellLasCurveInfo = new WellLasCurveInfo();
+    public WellLasCurveInfoPO mapToEntity(Map<String,String> curveInfoMap, int lasInfoId){
+        WellLasCurveInfoPO wellLasCurveInfo = new WellLasCurveInfoPO();
         BeanMap beanMap = BeanMap.create(wellLasCurveInfo);
         beanMap.put("lasInfoId",lasInfoId);
         for (Map.Entry<String,String> entry : curveInfoMap.entrySet()){

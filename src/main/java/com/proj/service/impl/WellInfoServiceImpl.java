@@ -2,7 +2,7 @@ package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kingbase8.util.KSQLException;
-import com.proj.entity.WellInfo;
+import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellPO;
 import com.proj.mapper.LASMapper;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 * @createDate 2025-03-18 14:40:26
 */
 @Service
-public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfo> implements WellInfoService{
+public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO> implements WellInfoService{
 
     @Autowired
     private LASMapper lasMapper;
@@ -46,6 +46,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfo> i
                     throw new DuplicateFileNameException("文件'" + wellLasPO.getName() + "'已存在");
                 }
             }
+            throw e;
         }
     }
 

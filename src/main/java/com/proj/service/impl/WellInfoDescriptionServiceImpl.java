@@ -1,7 +1,7 @@
 package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.proj.entity.WellInfoDescription;
+import com.proj.entity.po.WellInfoDescriptionPO;
 import com.proj.service.WellInfoDescriptionService;
 import com.proj.mapper.WellInfoDescriptionMapper;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 * @createDate 2025-03-18 14:40:32
 */
 @Service
-public class WellInfoDescriptionServiceImpl extends ServiceImpl<WellInfoDescriptionMapper, WellInfoDescription>
+public class WellInfoDescriptionServiceImpl extends ServiceImpl<WellInfoDescriptionMapper, WellInfoDescriptionPO>
     implements WellInfoDescriptionService{
 
 }

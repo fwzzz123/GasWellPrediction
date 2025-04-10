@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MavenTest-1.0-SNAPSHOT.jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MavenTest_1_0_SNAPSHOT_jar</output-path>
+    <root id="archive" name="MavenTest-1.0-SNAPSHOT.jar.jar" />
+  </artifact>
+</component>

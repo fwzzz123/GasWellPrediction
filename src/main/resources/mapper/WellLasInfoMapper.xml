@@ -45,6 +45,10 @@
         GDAT,RUN,PDAT,
         EPD,LMF,APD
     </sql>
+    <insert id="insertWell" parameterType="com.proj.entity.po.WellInfoPO">
+
+
+    </insert>
 
     <select id="getAllWellNames" resultType="java.lang.String">
         SELECT DISTINCT WELL FROM Well_Las_Info;
@@ -53,14 +57,14 @@
     <update id="updateWellIdInLasInfo" >
         UPDATE Well_Las_Info wli
         SET Well_ID = (
-            SELECT w.Well_ID
+            SELECT w.id
             FROM Well w
-            WHERE w.well_name = wli.well_name
+            WHERE w.well_name = wli.WELL
         )
         WHERE EXISTS (
             SELECT 1
             FROM Well w
-            WHERE w.well_name = wli.well_name
+            WHERE w.well_name = wli.WELL
         )
     </update>
 

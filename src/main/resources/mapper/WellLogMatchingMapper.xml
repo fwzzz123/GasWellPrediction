@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellLogMatchingMapper">
+
+    <insert id="insertBatch">
+        INSERT INTO well_log_curve_mapping (well_log_id, las_curve_name, standard_field_name, create_time, update_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.wellLogId}, #{item.lasCurveName}, #{item.standardFieldName}, now(), now())
+        </foreach>
+    </insert>
+
+    <select id="selectByWellLogId" resultType="com.proj.entity.po.WellLogCurveMappingPO">
+        SELECT * FROM well_log_curve_mapping WHERE well_log_id = #{wellLogId}
+    </select>
+
+</mapper>

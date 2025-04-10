@@ -23,4 +23,9 @@
         Permeability,Reservoir_Pressure,Oil_Viscosity,
         Initial_Oil_In_Place
     </sql>
+    <select id="selectIdByReservoirName" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT Reservoir_ID
+        FROM Reservoir_Basic_Info
+        WHERE Reservoir_Name = #{reservoirName}
+    </select>
 </mapper>

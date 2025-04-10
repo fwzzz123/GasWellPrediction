@@ -1,7 +1,7 @@
 package com.proj.mapper;
 
-import com.proj.entity.ReservoirBasicInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.proj.entity.ReservoirBasicInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -12,6 +12,9 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface ReservoirBasicInfoMapper extends BaseMapper<ReservoirBasicInfo> {
+
+    Integer selectIdByReservoirName(String reservoirName) ;
+
 
 }
 

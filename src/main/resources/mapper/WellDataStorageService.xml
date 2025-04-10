@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.proj.mapper.WellLasCurveInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.proj.entity.WellLasCurveInfo">
+    <resultMap id="BaseResultMap" type="com.proj.entity.po.WellLasCurveInfoPO">
             <id property="curveInfoId" column="Curve_Info_ID" jdbcType="OTHER"/>
             <result property="lasInfoId" column="Las_Info_ID" jdbcType="INTEGER"/>
             <result property="dept" column="DEPT" jdbcType="NUMERIC"/>

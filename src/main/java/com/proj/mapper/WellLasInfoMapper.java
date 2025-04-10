@@ -2,6 +2,7 @@ package com.proj.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.proj.entity.WellLasInfo;
+import com.proj.entity.po.WellInfoPO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface WellLasInfoMapper extends BaseMapper<WellLasInfo> {
     List<String> getAllWellNames();
 
     int updateWellIdInLasInfo();
+
+    void insertWell(WellInfoPO wellInfoPO);
 }
 
 

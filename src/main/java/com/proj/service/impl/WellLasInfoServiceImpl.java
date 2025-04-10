@@ -38,10 +38,6 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
         wellLasInfoMapper.insert(wellLasInfo);
         return (int) wellLasInfo.getLasInfoId();
     }
-
-
-
-
 }
 
 

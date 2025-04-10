@@ -10,7 +10,7 @@
         VALUES (#{wellName}, #{wellType}, #{wellCapacity}, #{gasReservoir}, NOW(), NOW());
     </insert>
 
-    <select id="getAllWellNames" resultType="com.proj.entity.po.WellPO">
+    <select id="getAllWellNames" resultType="java.lang.String">
         SELECT DISTINCT well_name FROM Well;
     </select>
 
