@@ -45,7 +45,7 @@ public class WellDataStorageServiceImpl implements WellDataStorageService {
                 wellInfoPO.setReservoirId(gasReservoirId);
             }
         }
-        wellInfoMapper.insert(wellInfoPO);
+        wellInfoMapper.insertWellInfo(wellInfoPO);
         return 1;  // 插入成功返回 1
     }
 }

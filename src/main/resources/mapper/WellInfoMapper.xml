@@ -31,4 +31,17 @@
         Water_Cut,Permeable_Thickness,Equivalent_Hydrocarbons,
         Conclusion
     </sql>
+    <insert id="insertWellInfo" parameterType="com.proj.entity.po.WellInfoPO">
+        INSERT INTO Well_Info (Reservoir_ID, Capacity, Well_Name, Well_Type)
+        VALUES (
+                   #{reservoirId},
+                   #{capacity},
+                   #{wellName},
+                   #{wellType}
+               )
+    </insert>
+    <select id="getByWellId" resultType="com.proj.entity.po.WellInfoPO">
+        select * from "Well_Info"
+        where Well_ID = #{wellId}
+    </select>
 </mapper>

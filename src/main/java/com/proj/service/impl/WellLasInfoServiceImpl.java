@@ -1,5 +1,6 @@
 package com.proj.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.proj.entity.WellLasInfo;
 import com.proj.mapper.WellLasInfoMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +39,18 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
         }
         wellLasInfoMapper.insert(wellLasInfo);
         return (int) wellLasInfo.getLasInfoId();
+    }
+
+    @Override
+    public List<WellLasInfo> getWellLas() {
+        return wellLasInfoMapper.selectList(null);
+    }
+
+    @Override
+    public List<WellLasInfo> getWellLasByWellId(String wellId) {
+        LambdaQueryWrapper<WellLasInfo> lambdaQuery = new LambdaQueryWrapper<>();
+        lambdaQuery.eq(WellLasInfo::getWellId, wellId);
+        return wellLasInfoMapper.selectList(lambdaQuery);
     }
 }
 

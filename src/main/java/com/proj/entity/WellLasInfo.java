@@ -8,145 +8,145 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * 
+ *
  * @TableName Well_Las_Info
  */
 @TableName(value ="Well_Las_Info")
 @Data
 public class WellLasInfo implements Serializable {
     /**
-     * 
+     *
      */
     @TableId(value = "Las_Info_ID",type = IdType.AUTO)
     private Object lasInfoId;
 
     /**
-     * 
+     *
      */
     private String wellId;
 
     /**
-     * 
+     *
      */
     private String strt;
 
     /**
-     * 
+     *
      */
     private String stop;
 
     /**
-     * 
+     *
      */
     private String step;
 
     /**
-     * 
+     *
      */
     private String absentValue;
 
     /**
-     * 
+     *
      */
     private String comp;
 
     /**
-     * 
+     *
      */
     private String well;
 
     /**
-     * 
+     *
      */
     private String fld;
 
     /**
-     * 
+     *
      */
     private String loc;
 
     /**
-     * 
+     *
      */
     private String ctry;
 
     /**
-     * 
+     *
      */
     private String prov;
 
     /**
-     * 
+     *
      */
     private String srvc;
 
     /**
-     * 
+     *
      */
-    private String date;
+    private String collectDate;
 
     /**
-     * 
+     *
      */
     private String uwi;
 
     /**
-     * 
+     *
      */
     private String cnty;
 
     /**
-     * 
+     *
      */
     private String stat;
 
     /**
-     * 
+     *
      */
     private String api;
 
     /**
-     * 
+     *
      */
     private String lic;
 
     /**
-     * 
+     *
      */
     private String lati;
 
     /**
-     * 
+     *
      */
     private String wellLong;
 
     /**
-     * 
+     *
      */
     private String gdat;
 
     /**
-     * 
+     *
      */
     private String run;
 
     /**
-     * 
+     *
      */
     private String pdat;
 
     /**
-     * 
+     *
      */
     private String epd;
 
     /**
-     * 
+     *
      */
     private String lmf;
 
     /**
-     * 
+     *
      */
     private String apd;
 
@@ -166,32 +166,32 @@ public class WellLasInfo implements Serializable {
         }
         WellLasInfo other = (WellLasInfo) that;
         return (this.getLasInfoId() == null ? other.getLasInfoId() == null : this.getLasInfoId().equals(other.getLasInfoId()))
-            && (this.getWellId() == null ? other.getWellId() == null : this.getWellId().equals(other.getWellId()))
-            && (this.getStrt() == null ? other.getStrt() == null : this.getStrt().equals(other.getStrt()))
-            && (this.getStop() == null ? other.getStop() == null : this.getStop().equals(other.getStop()))
-            && (this.getStep() == null ? other.getStep() == null : this.getStep().equals(other.getStep()))
-            && (this.getAbsentValue() == null ? other.getAbsentValue() == null : this.getAbsentValue().equals(other.getAbsentValue()))
-            && (this.getComp() == null ? other.getComp() == null : this.getComp().equals(other.getComp()))
-            && (this.getWell() == null ? other.getWell() == null : this.getWell().equals(other.getWell()))
-            && (this.getFld() == null ? other.getFld() == null : this.getFld().equals(other.getFld()))
-            && (this.getLoc() == null ? other.getLoc() == null : this.getLoc().equals(other.getLoc()))
-            && (this.getCtry() == null ? other.getCtry() == null : this.getCtry().equals(other.getCtry()))
-            && (this.getProv() == null ? other.getProv() == null : this.getProv().equals(other.getProv()))
-            && (this.getSrvc() == null ? other.getSrvc() == null : this.getSrvc().equals(other.getSrvc()))
-            && (this.getDate() == null ? other.getDate() == null : this.getDate().equals(other.getDate()))
-            && (this.getUwi() == null ? other.getUwi() == null : this.getUwi().equals(other.getUwi()))
-            && (this.getCnty() == null ? other.getCnty() == null : this.getCnty().equals(other.getCnty()))
-            && (this.getStat() == null ? other.getStat() == null : this.getStat().equals(other.getStat()))
-            && (this.getApi() == null ? other.getApi() == null : this.getApi().equals(other.getApi()))
-            && (this.getLic() == null ? other.getLic() == null : this.getLic().equals(other.getLic()))
-            && (this.getLati() == null ? other.getLati() == null : this.getLati().equals(other.getLati()))
-            && (this.getWellLong() == null ? other.getWellLong() == null : this.getWellLong().equals(other.getWellLong()))
-            && (this.getGdat() == null ? other.getGdat() == null : this.getGdat().equals(other.getGdat()))
-            && (this.getRun() == null ? other.getRun() == null : this.getRun().equals(other.getRun()))
-            && (this.getPdat() == null ? other.getPdat() == null : this.getPdat().equals(other.getPdat()))
-            && (this.getEpd() == null ? other.getEpd() == null : this.getEpd().equals(other.getEpd()))
-            && (this.getLmf() == null ? other.getLmf() == null : this.getLmf().equals(other.getLmf()))
-            && (this.getApd() == null ? other.getApd() == null : this.getApd().equals(other.getApd()));
+                && (this.getWellId() == null ? other.getWellId() == null : this.getWellId().equals(other.getWellId()))
+                && (this.getStrt() == null ? other.getStrt() == null : this.getStrt().equals(other.getStrt()))
+                && (this.getStop() == null ? other.getStop() == null : this.getStop().equals(other.getStop()))
+                && (this.getStep() == null ? other.getStep() == null : this.getStep().equals(other.getStep()))
+                && (this.getAbsentValue() == null ? other.getAbsentValue() == null : this.getAbsentValue().equals(other.getAbsentValue()))
+                && (this.getComp() == null ? other.getComp() == null : this.getComp().equals(other.getComp()))
+                && (this.getWell() == null ? other.getWell() == null : this.getWell().equals(other.getWell()))
+                && (this.getFld() == null ? other.getFld() == null : this.getFld().equals(other.getFld()))
+                && (this.getLoc() == null ? other.getLoc() == null : this.getLoc().equals(other.getLoc()))
+                && (this.getCtry() == null ? other.getCtry() == null : this.getCtry().equals(other.getCtry()))
+                && (this.getProv() == null ? other.getProv() == null : this.getProv().equals(other.getProv()))
+                && (this.getSrvc() == null ? other.getSrvc() == null : this.getSrvc().equals(other.getSrvc()))
+                && (this.getCollectDate() == null ? other.getCollectDate() == null : this.getCollectDate().equals(other.getCollectDate()))
+                && (this.getUwi() == null ? other.getUwi() == null : this.getUwi().equals(other.getUwi()))
+                && (this.getCnty() == null ? other.getCnty() == null : this.getCnty().equals(other.getCnty()))
+                && (this.getStat() == null ? other.getStat() == null : this.getStat().equals(other.getStat()))
+                && (this.getApi() == null ? other.getApi() == null : this.getApi().equals(other.getApi()))
+                && (this.getLic() == null ? other.getLic() == null : this.getLic().equals(other.getLic()))
+                && (this.getLati() == null ? other.getLati() == null : this.getLati().equals(other.getLati()))
+                && (this.getWellLong() == null ? other.getWellLong() == null : this.getWellLong().equals(other.getWellLong()))
+                && (this.getGdat() == null ? other.getGdat() == null : this.getGdat().equals(other.getGdat()))
+                && (this.getRun() == null ? other.getRun() == null : this.getRun().equals(other.getRun()))
+                && (this.getPdat() == null ? other.getPdat() == null : this.getPdat().equals(other.getPdat()))
+                && (this.getEpd() == null ? other.getEpd() == null : this.getEpd().equals(other.getEpd()))
+                && (this.getLmf() == null ? other.getLmf() == null : this.getLmf().equals(other.getLmf()))
+                && (this.getApd() == null ? other.getApd() == null : this.getApd().equals(other.getApd()));
     }
 
     @Override
@@ -211,7 +211,7 @@ public class WellLasInfo implements Serializable {
         result = prime * result + ((getCtry() == null) ? 0 : getCtry().hashCode());
         result = prime * result + ((getProv() == null) ? 0 : getProv().hashCode());
         result = prime * result + ((getSrvc() == null) ? 0 : getSrvc().hashCode());
-        result = prime * result + ((getDate() == null) ? 0 : getDate().hashCode());
+        result = prime * result + ((getCollectDate() == null) ? 0 : getCollectDate().hashCode());
         result = prime * result + ((getUwi() == null) ? 0 : getUwi().hashCode());
         result = prime * result + ((getCnty() == null) ? 0 : getCnty().hashCode());
         result = prime * result + ((getStat() == null) ? 0 : getStat().hashCode());
@@ -247,7 +247,7 @@ public class WellLasInfo implements Serializable {
         sb.append(", ctry=").append(ctry);
         sb.append(", prov=").append(prov);
         sb.append(", srvc=").append(srvc);
-        sb.append(", date=").append(date);
+        sb.append(", date=").append(collectDate);
         sb.append(", uwi=").append(uwi);
         sb.append(", cnty=").append(cnty);
         sb.append(", stat=").append(stat);

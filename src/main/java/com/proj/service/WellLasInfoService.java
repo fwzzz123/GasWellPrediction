@@ -3,6 +3,7 @@ package com.proj.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.proj.entity.WellLasInfo;
 
+import java.util.List;
 import java.util.Map;
 /**
 * @author L
@@ -12,6 +13,10 @@ import java.util.Map;
 public interface WellLasInfoService extends IService<WellLasInfo> {
 
     int savelas(Map<String, String> wellInfoMap);
+
+    List<WellLasInfo> getWellLas();
+
+    List<WellLasInfo> getWellLasByWellId(String wellId);
 
     /**
      * 从 Well_Las_Info 表中提取 WELL 列数据，检查是否已存在于 Well 表中，若不存在则插入

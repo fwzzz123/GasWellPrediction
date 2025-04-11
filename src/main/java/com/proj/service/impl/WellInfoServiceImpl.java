@@ -28,6 +28,8 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
     @Autowired
     private LASMapper lasMapper;
+    @Autowired
+    private WellInfoMapper wellInfoMapper;
 
     @Autowired
     private WellLasInfoMapper wellLasInfoMapper;
@@ -35,6 +37,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
     @Autowired
     private WellMapper wellMapper;
 
+    //这个函数不应该在这里。TODO mark
     @Override
     public void insertWellLAS(WellLasPO wellLasPO) {
         try{
@@ -89,6 +92,16 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
             }
         }
         return insertedCount;
+    }
+
+    @Override
+    public WellInfoPO getByWellId(String wellId) {
+        return (wellInfoMapper.getByWellId(wellId));
+    }
+
+    @Override
+    public void insert(WellInfoPO wellInfo) {
+        wellInfoMapper.insert(wellInfo);
     }
 }
 
