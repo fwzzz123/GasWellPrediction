@@ -1,12 +1,12 @@
-package com.proj.entity;
+package com.proj.entity.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
-import lombok.Data;
 
 /**
  * 
@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @TableName(value ="Reservoir_Basic_Info")
 @Data
-public class ReservoirBasicInfo implements Serializable {
+public class ReservoirBasicInfoPO implements Serializable {
     /**
      * 
      */
@@ -80,7 +80,7 @@ public class ReservoirBasicInfo implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ReservoirBasicInfo other = (ReservoirBasicInfo) that;
+        ReservoirBasicInfoPO other = (ReservoirBasicInfoPO) that;
         return (this.getReservoirId() == null ? other.getReservoirId() == null : this.getReservoirId().equals(other.getReservoirId()))
             && (this.getReservoirName() == null ? other.getReservoirName() == null : this.getReservoirName().equals(other.getReservoirName()))
             && (this.getLocation() == null ? other.getLocation() == null : this.getLocation().equals(other.getLocation()))

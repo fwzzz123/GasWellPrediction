@@ -2,6 +2,7 @@ package com.proj.mapper;
 
 import com.proj.entity.po.WellInfoPO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.proj.entity.po.WellLogCurveMappingPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,9 +14,14 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface WellInfoMapper extends BaseMapper<WellInfoPO> {
 
-    WellInfoPO getByWellId(String wellId);
+    WellInfoPO getByWellId(String wellName);
 
     void insertWellInfo(WellInfoPO wellInfo);
+
+    WellInfoPO getByWellName(String wellName);
+
+    void insertCurveMapping(WellLogCurveMappingPO mapping);
+
 }
 
 

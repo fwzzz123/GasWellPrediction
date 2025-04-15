@@ -17,4 +17,6 @@ public interface WellLogService extends IService<WellLogCurveMappingPO> {
     void saveMappings(Long wellLogId, List<WellLogCurveMappingPO> mappings);
 
     List<WellLogCurveMappingPO> getMappingsByWellLogId(Long wellLogId);
+
+    Long getWellLogIdByFileName(String fileName);
 }

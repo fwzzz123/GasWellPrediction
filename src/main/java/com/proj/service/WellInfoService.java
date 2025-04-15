@@ -3,6 +3,9 @@ package com.proj.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
+import com.proj.entity.po.WellLogCurveMappingPO;
+
+import java.util.List;
 
 /**
 * @author L
@@ -24,4 +27,10 @@ public interface WellInfoService extends IService<WellInfoPO> {
     WellInfoPO getByWellId(String wellId);
 
     void insert(WellInfoPO wellInfo);
+
+    WellInfoPO getByWellName(String wellName);
+
+    void insertCurveMapping(List<WellLogCurveMappingPO> mappingList);
+
+
 }

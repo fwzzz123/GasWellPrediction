@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface WellMapper {
+
     int insertWell(WellPO well);
 
     List<String> getAllWellNames();

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kingbase8.util.KSQLException;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
+import com.proj.entity.po.WellLogCurveMappingPO;
 import com.proj.entity.po.WellPO;
 import com.proj.mapper.LASMapper;
 import com.proj.mapper.WellInfoMapper;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,8 +103,62 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
     @Override
     public void insert(WellInfoPO wellInfo) {
-        wellInfoMapper.insert(wellInfo);
+
     }
+
+    @Override
+    public WellInfoPO getByWellName(String wellName) {
+        return wellInfoMapper.getByWellName(wellName);
+    }
+
+    @Override
+    public void insertCurveMapping(List<WellLogCurveMappingPO> mappingList) {
+        LocalDateTime now = LocalDateTime.now();
+        for (WellLogCurveMappingPO mapping : mappingList) {
+            mapping.setCreateTime(now);
+            mapping.setUpdateTime(now);
+            // 这里使用 Mapper 直接插入
+            wellInfoMapper.insertCurveMapping(mapping);
+        }
+    }
+
+
+//这里有逻辑错误，在这个时候ID还没有被插入，所以不存在ID
+//    @Override
+//    public boolean saveCurveMappings(List<CurveMappingDTO> mappingList) {
+//        if (mappingList == null || mappingList.isEmpty()) {
+//            return false;
+//        }
+//
+//        LocalDateTime now = LocalDateTime.now();
+//        List<WellLogCurveMappingPO> allMappings = new ArrayList<>();
+//
+//        for (CurveMappingDTO fileMapping : mappingList) {
+//            Long wellLogId = getWellLogIdByFileName(fileMapping.getFileName());
+//            if (wellLogId == null) continue;
+//
+//            for (CurveMappingDTO.CurveDTO curve : fileMapping.getCurves()) {
+//                WellLogCurveMappingPO mappingPO = new WellLogCurveMappingPO();
+//                mappingPO.setWellLogId(wellLogId);
+//                mappingPO.setLasCurveName(curve.getLasCurveName());
+//                mappingPO.setStandardFieldName(curve.getStandardFieldName());
+//                mappingPO.setCreateTime(now);
+//                mappingPO.setUpdateTime(now);
+//                allMappings.add(mappingPO);
+//            }
+//        }
+//
+//        if (!allMappings.isEmpty()) {
+//            insertCurveMapping(allMappings);
+//        }
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public void insert(WellInfoPO wellInfo) {
+//        wellInfoMapper.insert(wellInfo);
+//    }
 }
 
 

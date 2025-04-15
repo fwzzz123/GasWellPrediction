@@ -40,8 +40,29 @@
                    #{wellType}
                )
     </insert>
+    <insert id="insertCurveMapping" parameterType="com.proj.entity.po.WellLogCurveMappingPO">
+        INSERT INTO well_log_curve_mapping (
+            well_log_id,
+            las_curve_name,
+            standard_field_name,
+            create_time,
+            update_time
+        )
+        VALUES (
+                   #{wellLogId},
+                   #{lasCurveName},
+                   #{standardFieldName},
+                   #{createTime},
+                   #{updateTime}
+               )
+    </insert>
     <select id="getByWellId" resultType="com.proj.entity.po.WellInfoPO">
         select * from "Well_Info"
-        where Well_ID = #{wellId}
+        where Well_ID = #{wellName}
+    </select>
+    <select id="getByWellName" resultType="com.proj.entity.po.WellInfoPO" >
+        select * from "Well_Info"
+        where Well_Name = #{wellName}
+
     </select>
 </mapper>

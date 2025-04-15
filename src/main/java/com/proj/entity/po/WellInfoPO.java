@@ -1,5 +1,6 @@
 package com.proj.entity.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -19,8 +20,9 @@ public class WellInfoPO implements Serializable {
     /**
      * 
      */
-    @TableId
-    private String wellId;
+
+    @TableId(value = "Well_Id", type = IdType.AUTO) // 指定为自增主键
+    private Integer wellId;
 
     /**
      * 

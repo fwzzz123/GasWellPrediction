@@ -15,6 +15,7 @@ import java.util.List;
 @RequestMapping("/curve")
 @CrossOrigin
 public class CurveController {
+
     @Autowired
     private WellLasInfoService wellLasInfoService;
 

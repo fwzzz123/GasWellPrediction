@@ -21,6 +21,8 @@ public interface WellLasInfoMapper extends BaseMapper<WellLasInfo> {
     int updateWellIdInLasInfo();
 
     void insertWell(WellInfoPO wellInfoPO);
+
+
 }
 
 

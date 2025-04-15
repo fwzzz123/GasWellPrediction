@@ -68,4 +68,6 @@ public class WellController {
     public List<WellLogCurveMappingPO> getMapping(@PathVariable Long wellLogId) {
         return wellLogService.getMappingsByWellLogId(wellLogId);
     }
+
+
 }

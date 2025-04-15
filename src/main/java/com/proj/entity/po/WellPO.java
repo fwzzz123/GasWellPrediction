@@ -6,7 +6,7 @@ import lombok.Data;
 import java.security.Timestamp;
 
 /**
- * @description: TODO 
+ * @description: TODO
  * @author fw
  * @date 2025/3/31 下午7:56
  * @version 1.0
@@ -15,7 +15,7 @@ import java.security.Timestamp;
 @Data
 @TableName("Well")
 public class WellPO {
-
+//
     private Long id;
 
     private String wellName;
