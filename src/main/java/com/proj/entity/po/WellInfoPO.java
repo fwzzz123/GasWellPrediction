@@ -21,8 +21,8 @@ public class WellInfoPO implements Serializable {
      * 
      */
 
-    @TableId(value = "Well_Id", type = IdType.AUTO) // 指定为自增主键
-    private Integer wellId;
+    @TableId
+    private String wellId;
 
     /**
      * 

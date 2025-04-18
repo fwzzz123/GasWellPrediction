@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @TableName("well_log")
 public class WellLogVO {
-    private Long id;
+    private String id;
 
     private Long wellId;
 

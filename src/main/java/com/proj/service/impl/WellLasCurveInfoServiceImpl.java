@@ -39,7 +39,7 @@ public class WellLasCurveInfoServiceImpl extends ServiceImpl<WellLasCurveInfoMap
     //2. 处理前端传回的表头对应数据，构建WellLasCurveMatchInfo数据表，将数据入库
     //3. 业务逻辑处理
     @Override
-    public void savelas(MultipartFile file, int lasInfoId) {
+    public void savelas(MultipartFile file, String lasInfoId) {
         String line;
         ArrayList<String> curveInfoList = new ArrayList<>();
         Map<String,String> cureveInfoMap= new HashMap<>();
@@ -106,7 +106,7 @@ public class WellLasCurveInfoServiceImpl extends ServiceImpl<WellLasCurveInfoMap
     }
 
     @Override
-    public List<WellLasCurveInfoPO> getCurveByLasInfoId(int lasInfoId) {
+    public List<WellLasCurveInfoPO> getCurveByLasInfoId(String lasInfoId) {
         LambdaQueryWrapper<WellLasCurveInfoPO> lambdaQuery = new LambdaQueryWrapper<>();
         lambdaQuery.eq(WellLasCurveInfoPO::getLasInfoId, lasInfoId);
 
@@ -114,7 +114,7 @@ public class WellLasCurveInfoServiceImpl extends ServiceImpl<WellLasCurveInfoMap
     }
 
 
-    public WellLasCurveInfoPO mapToEntity(Map<String,String> curveInfoMap, int lasInfoId){
+    public WellLasCurveInfoPO mapToEntity(Map<String,String> curveInfoMap, String lasInfoId){
         WellLasCurveInfoPO wellLasCurveInfo = new WellLasCurveInfoPO();
         BeanMap beanMap = BeanMap.create(wellLasCurveInfo);
         beanMap.put("lasInfoId",lasInfoId);

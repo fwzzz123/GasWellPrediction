@@ -24,7 +24,7 @@ public class CurveController {
 
     //根据lasInfoId外键查询curve信息
     @RequestMapping("getCurveByLasInfoId")
-    public List<WellLasCurveInfoPO> getCurveByLasInfoId(@RequestParam("lasInfoId") int lasInfoId){
+    public List<WellLasCurveInfoPO> getCurveByLasInfoId(@RequestParam("lasInfoId") String lasInfoId){
         return wellLasCurveInfoService.getCurveByLasInfoId(lasInfoId);
     }
 }

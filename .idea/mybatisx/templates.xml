@@ -64,13 +64,13 @@
             <option name="needToStringHashcodeEquals" value="true" />
             <option name="needsComment" value="true" />
             <option name="needsModel" value="true" />
-            <option name="relativePackage" value="entity" />
+            <option name="relativePackage" value="entity.vo" />
             <option name="superClass" value="" />
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="WellLasInfo" />
-                  <option name="tableName" value="Well_Las_Info" />
+                  <option name="className" value="WellLogCurveMapping" />
+                  <option name="tableName" value="well_log_curve_mapping" />
                 </TableUIInfo>
               </list>
             </option>

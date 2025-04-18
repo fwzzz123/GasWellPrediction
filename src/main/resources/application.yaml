@@ -7,9 +7,9 @@ spring:
   datasource:
     driver-class-name: com.kingbase8.Driver
     username: SYSTEM
-    password: 654321
+    password: 123456
 
-    url: jdbc:kingbase8://192.168.3.21:54321/test?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:kingbase8://192.168.31.87:54321/test?useUnicode=true&characterEncoding=UTF-8
 
   servlet:
     multipart:

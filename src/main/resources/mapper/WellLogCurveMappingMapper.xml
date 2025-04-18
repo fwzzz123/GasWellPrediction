@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellLogCurveMappingMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.vo.WellLogCurveMappingVO">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="wellLogId" column="well_log_id" jdbcType="VARCHAR"/>
+            <result property="lasCurveName" column="las_curve_name" jdbcType="VARCHAR"/>
+            <result property="standardFieldName" column="standard_field_name" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,well_log_id,las_curve_name,
+        standard_field_name,create_time,update_time
+    </sql>
+    <select id="find_standard_field_name_byname" resultType="java.lang.String">
+        select standard_field_name from well_log_curve_mapping
+        where las_curve_name=#{name} LIMIT 1
+    </select>
+</mapper>

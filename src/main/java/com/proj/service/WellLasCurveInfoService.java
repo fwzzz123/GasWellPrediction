@@ -13,7 +13,7 @@ import java.util.List;
 */
 public interface WellLasCurveInfoService extends IService<WellLasCurveInfoPO> {
 
-    void savelas(MultipartFile file, int lasInfoId);
+    void savelas(MultipartFile file, String lasInfoId);
 
-    List<WellLasCurveInfoPO> getCurveByLasInfoId(int lasInfoId);
+    List<WellLasCurveInfoPO> getCurveByLasInfoId(String lasInfoId);
 }

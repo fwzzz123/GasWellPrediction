@@ -25,7 +25,7 @@ public class WellLasCurveInfoPO implements Serializable {
     /**
      * 
      */
-    private Integer lasInfoId;
+    private String lasInfoId;
 
     /**
      * 

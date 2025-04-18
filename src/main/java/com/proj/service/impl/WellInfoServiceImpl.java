@@ -103,6 +103,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
     @Override
     public void insert(WellInfoPO wellInfo) {
+        wellInfoMapper.insert(wellInfo);
 
     }
 

@@ -13,7 +13,7 @@ import java.util.Map;
 */
 public interface WellLasInfoService extends IService<WellLasInfo> {
 
-    int savelas(Map<String, String> wellInfoMap);
+    String savelas(Map<String, String> wellInfoMap);
 
     List<WellLasInfo> getWellLas();
 

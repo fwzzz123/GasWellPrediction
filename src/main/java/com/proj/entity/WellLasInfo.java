@@ -18,7 +18,7 @@ public class WellLasInfo implements Serializable {
      *
      */
     @TableId(value = "Las_Info_ID",type = IdType.AUTO)
-    private Object lasInfoId;
+    private String lasInfoId;
 
     /**
      *

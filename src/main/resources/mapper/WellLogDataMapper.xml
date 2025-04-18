@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellLogDataMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.vo.WellLogDataVO">
+            <id property="id" column="id" jdbcType="OTHER"/>
+            <result property="wellLogId" column="well_log_id" jdbcType="VARCHAR"/>
+            <result property="depth" column="depth" jdbcType="FLOAT"/>
+            <result property="gamma" column="gamma" jdbcType="FLOAT"/>
+            <result property="density" column="density" jdbcType="FLOAT"/>
+            <result property="neutron" column="neutron" jdbcType="FLOAT"/>
+            <result property="vp" column="vp" jdbcType="FLOAT"/>
+            <result property="vs" column="vs" jdbcType="FLOAT"/>
+            <result property="deepResistance" column="deep_resistance" jdbcType="FLOAT"/>
+            <result property="mediumResistance" column="medium_resistance" jdbcType="FLOAT"/>
+            <result property="shallowResistance" column="shallow_resistance" jdbcType="FLOAT"/>
+            <result property="sp" column="sp" jdbcType="FLOAT"/>
+            <result property="caliper" column="caliper" jdbcType="FLOAT"/>
+            <result property="peIndex" column="pe_index" jdbcType="FLOAT"/>
+            <result property="porosity" column="porosity" jdbcType="FLOAT"/>
+            <result property="permeability" column="permeability" jdbcType="FLOAT"/>
+            <result property="waterSaturation" column="water_saturation" jdbcType="FLOAT"/>
+            <result property="shaleContent" column="shale_content" jdbcType="FLOAT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,well_log_id,depth,
+        gamma,density,neutron,
+        vp,vs,deep_resistance,
+        medium_resistance,shallow_resistance,sp,
+        caliper,pe_index,porosity,
+        permeability,water_saturation,shale_content,
+        create_time,update_time
+    </sql>
+</mapper>

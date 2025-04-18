@@ -33,7 +33,7 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
     private WellMapper wellMapper;
 
     @Override
-    public int savelas(Map<String, String> wellInfoMap) {
+    public String savelas(Map<String, String> wellInfoMap) {
         WellLasInfo wellLasInfo = new WellLasInfo();
         BeanMap beanMap = BeanMap.create(wellLasInfo);
         for(Map.Entry<String,String> entry : wellInfoMap.entrySet()){
@@ -42,7 +42,7 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
             }
         }
         wellLasInfoMapper.insert(wellLasInfo);
-        return (int) wellLasInfo.getLasInfoId();
+        return  wellLasInfo.getLasInfoId();
     }
 
     @Override
