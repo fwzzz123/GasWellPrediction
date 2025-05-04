@@ -13,6 +13,6 @@ import java.util.List;
  */
 @Data
 public class CurveMappingRequest {
-   private Long wellLogId;
+   private String wellLogId;
    private List<WellLogCurveMappingPO> mappingList;
 }

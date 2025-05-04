@@ -57,7 +57,6 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
     @Override
     public WellLasPO getById(Long id) {
-
         return lasMapper.getWellLASById(id);
     }
 
@@ -96,15 +95,11 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         return insertedCount;
     }
 
-    @Override
-    public WellInfoPO getByWellId(String wellId) {
-        return (wellInfoMapper.getByWellId(wellId));
-    }
+
 
     @Override
     public void insert(WellInfoPO wellInfo) {
         wellInfoMapper.insert(wellInfo);
-
     }
 
     @Override
@@ -123,6 +118,30 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         }
     }
 
+    @Override
+    public boolean existsByWellId(String wellId) {
+        return wellInfoMapper.existsByWellId(wellId);
+    }
+
+    @Override
+    public void createWellInfo(WellInfoPO wellInfo) {
+        wellInfoMapper.insert(wellInfo);
+    }
+
+    @Override
+    public void deleteWellInfo(String wellId) {
+        wellInfoMapper.deleteByWellId(wellId);
+    }
+
+    @Override
+    public void updateWellInfo(WellInfoPO wellInfo) {
+        wellInfoMapper.updateByWellId(wellInfo);
+    }
+
+    @Override
+    public WellInfoPO queryWellInfo(String wellId) {
+        return wellInfoMapper.selectByWellId(wellId);
+    }
 
 //这里有逻辑错误，在这个时候ID还没有被插入，所以不存在ID
 //    @Override

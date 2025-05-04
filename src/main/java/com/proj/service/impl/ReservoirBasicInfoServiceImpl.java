@@ -43,6 +43,29 @@ public class ReservoirBasicInfoServiceImpl extends ServiceImpl<ReservoirBasicInf
         }
         return 0;
     }
+
+    @Override
+    public int createReservoirByName(String reservoirName) {
+        ReservoirBasicInfoPO reservoir = new ReservoirBasicInfoPO();
+        reservoir.setReservoirName(reservoirName);
+        return reservoirBasicInfoMapper.insert(reservoir);
+    }
+
+    @Override
+    public int deleteReservoirById(int reservoirId) {
+        return reservoirBasicInfoMapper.deleteById(reservoirId);
+    }
+
+    @Override
+    public int updateReservoirById(ReservoirBasicInfoPO reservoir) {
+        return reservoirBasicInfoMapper.updateById(reservoir);
+    }
+
+    @Override
+    public ReservoirBasicInfoPO queryReservoirById(int reservoirId) {
+        return reservoirBasicInfoMapper.selectById(reservoirId);
+    }
+
 }
 
 

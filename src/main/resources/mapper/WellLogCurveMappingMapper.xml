@@ -17,6 +17,26 @@
         id,well_log_id,las_curve_name,
         standard_field_name,create_time,update_time
     </sql>
+
+    <insert id="insertNewWellLogId" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO well_log_curve_mapping (well_log_id, las_curve_name, standard_field_name, create_time, update_time)
+        VALUES (#{fileName}, '', '', NOW(), NOW())
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO well_log_curve_mapping (well_log_id, las_curve_name, standard_field_name, create_time, update_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.wellLogId}, #{item.lasCurveName}, #{item.standardFieldName}, NOW(), NOW())
+        </foreach>
+    </insert>
+
+    <select id="getWellLogIdByFileName" resultType="java.lang.String">
+        SELECT well_log_id FROM well_log_curve_mapping
+        WHERE las_curve_name = #{fileName}
+        LIMIT 1
+    </select>
+
     <select id="find_standard_field_name_byname" resultType="java.lang.String">
         select standard_field_name from well_log_curve_mapping
         where las_curve_name=#{name} LIMIT 1

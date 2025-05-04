@@ -1,6 +1,7 @@
 package com.proj.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.proj.entity.dto.FieldCommentDTO;
 import com.proj.entity.vo.WellLogDataVO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,4 +16,9 @@ import java.util.List;
 public interface WellLogDataService extends IService<WellLogDataVO> {
 
     ResponseEntity<String> ac_mapping_savewelllogdata(List<MultipartFile> files);
+
+    // 新增方法：返回 WellLogDataPO 中除了 id 和 wellLogId 之外的所有字段名称
+    List<FieldCommentDTO> selectAllTableHeaders();
+
+
 }

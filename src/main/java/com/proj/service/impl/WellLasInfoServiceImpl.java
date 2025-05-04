@@ -3,8 +3,12 @@ package com.proj.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.proj.entity.WellLasInfo;
+import com.proj.entity.po.WellInfoPO;
+import com.proj.entity.po.WellLogPO;
 import com.proj.mapper.WellLasInfoMapper;
+import com.proj.mapper.WellLogMapper;
 import com.proj.mapper.WellMapper;
+import com.proj.service.WellInfoService;
 import com.proj.service.WellLasInfoService;
 import com.proj.utils.NamingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -31,6 +36,12 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
 
     @Autowired
     private WellMapper wellMapper;
+
+    @Autowired
+    private WellLogMapper wellLogMapper;
+
+    @Autowired
+    private WellInfoService wellInfoService;
 
     @Override
     public String savelas(Map<String, String> wellInfoMap) {
@@ -155,6 +166,77 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
         return result;
     }
 
+
+
+
+    @Override
+    public void insertWellLogFromParsedHeader(List<MultipartFile> files) {
+        // 调用 parseWellHeader 方法生成 parsedHeaders
+        List<Map<String, Object>> parsedHeaders = parseWellHeader(files);
+
+        // 原有逻辑保持不变
+        if (parsedHeaders == null || parsedHeaders.isEmpty()) {
+            throw new IllegalArgumentException("解析后的头部信息为空");
+        }
+
+        for (Map<String, Object> header : parsedHeaders) {
+            String fileName = (String) header.get("fileName");
+            Map<String, Object> wellHeader = (Map<String, Object>) header.get("wellHeader");
+
+            // 提取字段
+            String wellId = fileName;
+            String id = fileName.split("\\(")[0]; // 提取文件名部分
+            Double startDepth = parseDepth((String) wellHeader.get("strt"));
+            Double endDepth = parseDepth((String) wellHeader.get("stop"));
+            Double step = parseStep((String) wellHeader.get("step"));
+
+            // 检查 Well_Info 表中是否存在 Well_ID 为 fileName 的记录
+            boolean wellExists = wellInfoService.existsByWellId(wellId);
+            if (!wellExists) {
+                // 如果不存在，则插入新记录
+                WellInfoPO wellInfo = new WellInfoPO();
+                wellInfo.setWellId(wellId);
+                wellInfoService.createWellInfo(wellInfo);
+            }
+
+            // 创建 WellLogPO 对象
+            WellLogPO wellLogPO = new WellLogPO();
+            wellLogPO.setId(id);
+            wellLogPO.setWellId(wellId);
+            wellLogPO.setStartDepth(startDepth);
+            wellLogPO.setEndDepth(endDepth);
+            wellLogPO.setStep(step);
+            wellLogPO.setCreateTime(LocalDateTime.now());
+            wellLogPO.setUpdateTime(LocalDateTime.now());
+
+            // 插入数据库
+            wellLogMapper.insert(wellLogPO);
+        }
+    }
+
+    /**
+     * 解析深度字段（去除前缀 M 并转换为数值）
+     * @param value 原始值
+     * @return 解析后的数值
+     */
+    private Double parseDepth(String value) {
+        if (value == null || !value.startsWith("M")) {
+            return null;
+        }
+        return Double.parseDouble(value.substring(1));
+    }
+
+    /**
+     * 解析步长字段（去除前缀 M 并转换为数值）
+     * @param value 原始值
+     * @return 解析后的数值
+     */
+    private Double parseStep(String value) {
+        if (value == null || !value.startsWith("M")) {
+            return null;
+        }
+        return Double.parseDouble(value.substring(1));
+    }
 
 }
 

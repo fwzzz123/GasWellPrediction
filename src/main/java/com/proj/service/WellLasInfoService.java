@@ -19,13 +19,10 @@ public interface WellLasInfoService extends IService<WellLasInfo> {
 
     List<WellLasInfo> getWellLasByWellId(String wellId);
 
-    /**
-     * 从 Well_Las_Info 表中提取 WELL 列数据，检查是否已存在于 Well 表中，若不存在则插入
-     * @return 插入成功的井数量
-     */
-
     public List<Map<String, Object>> parseWellHeader(List<MultipartFile> files);
 
     public List<Map<String, Object>> parseCurveHeader(List<MultipartFile> files);
+
+    void insertWellLogFromParsedHeader(List<MultipartFile> files);
 
 }

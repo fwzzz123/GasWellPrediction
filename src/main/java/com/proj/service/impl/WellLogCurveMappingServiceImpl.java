@@ -1,13 +1,14 @@
 package com.proj.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.proj.entity.po.WellLogCurveMappingPO;
 import com.proj.entity.vo.WellLogCurveMappingVO;
-import com.proj.service.WellLogCurveMappingService;
 import com.proj.mapper.WellLogCurveMappingMapper;
+import com.proj.service.WellLogCurveMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author L
@@ -19,11 +20,20 @@ public class WellLogCurveMappingServiceImpl extends ServiceImpl<WellLogCurveMapp
     implements WellLogCurveMappingService{
 
     @Autowired
-    WellLogCurveMappingMapper wellLogCurveMappingMapper;
+    private WellLogCurveMappingMapper curveMappingMapper;
+
+    @Autowired
+    WellLogCurveMappingServiceImpl wellLogCurveMappingMapper;
+
+
     @Override
     public String find_standard_field_name_byname(String name) {
-
         return wellLogCurveMappingMapper.find_standard_field_name_byname(name);
+    }
+
+    @Override
+    public void saveCurveMappings(List<WellLogCurveMappingPO> mappings) {
+        curveMappingMapper.insertBatch(mappings);
     }
 }
 

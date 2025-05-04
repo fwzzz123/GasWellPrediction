@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @TableName("well_log_curve_mapping")
 public class WellLogCurveMappingPO {
     private Long id;
-    private Long wellLogId;
+    private String wellLogId; // 修改: 将 Long 类型改为 String 类型
     private String lasCurveName;
     private String standardFieldName;
     private LocalDateTime createTime;

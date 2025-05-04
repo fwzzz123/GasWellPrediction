@@ -5,7 +5,6 @@ import com.proj.entity.dto.CurveMappingDTO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
-import com.proj.entity.vo.WellLogCurveMappingVO;
 import com.proj.service.*;
 import com.proj.utils.NamingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,9 @@ public class LASController {
 
     @Autowired
     private WellLogDataService wellLogDataService ;
+
+    @Autowired
+    private WellLogCurveMappingService wellLogCurveMappingService;
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -195,8 +197,20 @@ public class LASController {
         return ResponseEntity.ok(result);
     }
 
+    //根据解析的表头插入Well_Log数据，传入的参数是/parseCurveHeader API的返回参数
+    @PostMapping("/insertWellLogFromParsedHeader")
+    public ResponseEntity<String> insertWellLogFromParsedHeader(@RequestParam("files") List<MultipartFile> files) {
+        try {
+            // 调用服务层方法
+            wellLasInfoService.insertWellLogFromParsedHeader(files);
+            return ResponseEntity.ok("Well_Log 数据插入成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Well_Log 数据插入失败: " + e.getMessage());
+        }
+    }
 
-
+    //根据las测井文件插入well_log
     @PostMapping("/saveCurveMappings")
     public ResponseEntity<String> saveCurveMappings1(@RequestBody List<CurveMappingDTO> mappingList) {
         if (mappingList == null || mappingList.isEmpty()) {
@@ -209,18 +223,14 @@ public class LASController {
         for (CurveMappingDTO fileMapping : mappingList) {
             String fileName = fileMapping.getFileName();
 
-            // 你可能需要一个方式来获取 wellLogId（根据 fileName）
-            Long wellLogId = wellLogService.getWellLogIdByFileName(fileName);
-
-            if (wellLogId == null) {
-                continue;
-            }
+            // 检查并插入 Well_Log 表
+            String wellLogId = wellLogService.checkAndInsertWellLog(fileName);
 
             for (CurveMappingDTO.CurveDTO curve : fileMapping.getCurves()) {
                 WellLogCurveMappingPO mappingPO = new WellLogCurveMappingPO();
                 mappingPO.setWellLogId(wellLogId);
                 mappingPO.setLasCurveName(curve.getLasCurveName());
-                mappingPO.setStandardFieldName(curve.getStandardFieldName()); // ✅ 用新的字段名
+                mappingPO.setStandardFieldName(curve.getStandardFieldName());
                 mappingPO.setCreateTime(now);
                 mappingPO.setUpdateTime(now);
 
@@ -228,8 +238,9 @@ public class LASController {
             }
         }
 
+        // 保存 CurveMappings
         if (!allMappings.isEmpty()) {
-            wellInfoService.insertCurveMapping(allMappings); // 批量插入
+            wellLogCurveMappingService.saveCurveMappings(allMappings);
         }
 
         return ResponseEntity.ok("映射关系保存成功");

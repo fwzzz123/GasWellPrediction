@@ -1,7 +1,10 @@
 package com.proj.service;
 
-import com.proj.entity.vo.WellLogCurveMappingVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.proj.entity.po.WellLogCurveMappingPO;
+import com.proj.entity.vo.WellLogCurveMappingVO;
+
+import java.util.List;
 
 /**
 * @author L
@@ -10,4 +13,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface WellLogCurveMappingService extends IService<WellLogCurveMappingVO> {
     public String find_standard_field_name_byname(String name);
+
+    /**
+     * 保存 CurveMappings 到 well_log_curve_mapping 表
+     * @param mappings CurveMappings 列表
+     */
+    void saveCurveMappings(List<WellLogCurveMappingPO> mappings);
+
 }

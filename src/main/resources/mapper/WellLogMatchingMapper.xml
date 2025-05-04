@@ -2,16 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.proj.mapper.WellLogMatchingMapper">
 
-    <insert id="insertBatch">
-        INSERT INTO well_log_curve_mapping (well_log_id, las_curve_name, standard_field_name, create_time, update_time)
-        VALUES
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO well_log_curve_mapping (
+        well_log_id,
+        las_curve_name,
+        standard_field_name,
+        create_time,
+        update_time
+        ) VALUES
         <foreach collection="list" item="item" separator=",">
-            (#{item.wellLogId}, #{item.lasCurveName}, #{item.standardFieldName}, now(), now())
+            (
+            #{item.wellLogId},
+            #{item.lasCurveName},
+            #{item.standardFieldName},
+            now(),
+            now()
+            )
         </foreach>
+    </insert>
+
+<!--    <insert id="insertNewWellLogId" parameterType="com.proj.entity.po.WellLogCurveMappingPO"  useGeneratedKeys="true" keyProperty="wellLogId">-->
+<!--        INSERT INTO well_log_curve_mapping (well_log_id, las_curve_name, standard_field_name, create_time, update_time)-->
+<!--        VALUES (#{wellLogId}, 'null', 'null', NOW(), NOW())-->
+<!--    </insert>-->
+    <insert id="insertNewWellLogId" parameterType="string">
+        INSERT INTO well_log (id) VALUES (#{fileName})
     </insert>
 
     <select id="selectByWellLogId" resultType="com.proj.entity.po.WellLogCurveMappingPO">
         SELECT * FROM well_log_curve_mapping WHERE well_log_id = #{wellLogId}
+    </select>
+    <select id="getWellLogIdByFileName" resultType="java.lang.String" parameterType="java.lang.String">
+
+        SELECT well_log_id FROM well_log_curve_mapping
+        WHERE las_curve_name = #{fileName}
+        LIMIT 1
     </select>
 
 </mapper>

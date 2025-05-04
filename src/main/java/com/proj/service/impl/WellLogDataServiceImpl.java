@@ -1,11 +1,13 @@
 package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.proj.entity.po.WellLasCurveInfoPO;
+import com.proj.entity.dto.FieldCommentDTO;
+import com.proj.entity.po.WellLogDataPO;
 import com.proj.entity.vo.WellLogDataVO;
 import com.proj.mapper.WellLogCurveMappingMapper;
-import com.proj.service.WellLogDataService;
 import com.proj.mapper.WellLogDataMapper;
+import com.proj.service.WellLogDataService;
+import com.proj.utils.CommentUtils;
 import com.proj.utils.NamingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
@@ -16,11 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
 * @author L
@@ -104,6 +104,41 @@ public class WellLogDataServiceImpl extends ServiceImpl<WellLogDataMapper, WellL
     }
 
 
+    // 实现 selectAllTableHeaders 方法
+//    @Override
+//    public List<String> selectAllTableHeaders() {
+//        // 获取 WellLogDataPO 类的所有字段
+//        Field[] fields = WellLogDataPO.class.getDeclaredFields();
+//        return Arrays.stream(fields)
+//                .map(Field::getName)
+//                .filter(fieldName -> !fieldName.equals("id") &&
+//                                 !fieldName.equals("wellLogId") &&
+//                                 !fieldName.equals("serialVersionUID") &&
+//                                 !fieldName.equals("depth") &&
+//                                 !fieldName.equals("createTime") &&
+//                                 !fieldName.equals("updateTime"))
+//                .collect(Collectors.toList());
+//    }
+    @Override
+    public List<FieldCommentDTO> selectAllTableHeaders() {
+        Field[] fields = WellLogDataPO.class.getDeclaredFields();
+        return Arrays.stream(fields)
+                .map(field -> {
+                    CommentUtils comment = field.getAnnotation(CommentUtils.class);
+                    String fieldName = field.getName();
+                    String commentValue = (comment != null) ? comment.value() : fieldName;
+                    return new FieldCommentDTO(fieldName, commentValue);
+                })
+                .filter(dto -> !dto.getField().equals("id") &&
+                        !dto.getField().equals("wellLogId") &&
+                        !dto.getField().equals("depth") &&
+                        !dto.getField().equals("serialVersionUID") &&
+                        !dto.getField().equals("createTime") &&
+                        !dto.getField().equals("updateTime"))
+                .collect(Collectors.toList());
+    }
+
+
 
     public WellLogDataVO mapToEntity(Map<String,String> curveInfoMap, String well_log_id){
         WellLogDataVO wellLogDataVO = new WellLogDataVO();
@@ -116,6 +151,7 @@ public class WellLogDataServiceImpl extends ServiceImpl<WellLogDataMapper, WellL
         }
         return wellLogDataVO;
     }
+
 }
 
 

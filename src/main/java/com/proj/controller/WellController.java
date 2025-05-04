@@ -61,13 +61,12 @@ public class WellController {
     //
     @PostMapping("/saveMatchingwells")
     public String saveCurveMappingWells(@RequestBody CurveMappingRequest request) {
-        wellLogService.saveMappings(request.getWellLogId(), request.getMappingList());
+        wellLogService.saveMappings(request.getMappingList());
         return "保存成功";
     }
     @PostMapping("/{wellLogId}")
-    public List<WellLogCurveMappingPO> getMapping(@PathVariable Long wellLogId) {
+    public List<WellLogCurveMappingPO> getMapping(@PathVariable String wellLogId) {
         return wellLogService.getMappingsByWellLogId(wellLogId);
     }
-
 
 }

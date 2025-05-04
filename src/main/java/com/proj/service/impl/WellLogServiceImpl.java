@@ -3,6 +3,7 @@ package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.proj.entity.po.WellLogCurveMappingPO;
+import com.proj.entity.po.WellLogPO;
 import com.proj.mapper.WellLogMapper;
 import com.proj.mapper.WellLogMatchingMapper;
 import com.proj.service.WellLogService;
@@ -22,26 +23,31 @@ public class WellLogServiceImpl extends ServiceImpl<WellLogMatchingMapper, WellL
     private WellLogMapper wellLogMapper;
 
     @Override
-    public void saveMappings(Long wellLogId, List<WellLogCurveMappingPO> mappings) {
-        // 实现保存映射的逻辑
-        for(WellLogCurveMappingPO mappingPO : mappings) {
-            mappingPO.setWellLogId(wellLogId);
-        }
+    public void saveMappings(List<WellLogCurveMappingPO> mappings) {
         mappingMapper.insertBatch(mappings);
     }
 
     @Override
-    public List<WellLogCurveMappingPO> getMappingsByWellLogId(Long wellLogId) {
-        // 实现根据 wellLogId 获取映射的逻辑
+    public List<WellLogCurveMappingPO> getMappingsByWellLogId(String wellLogId) {
         return mappingMapper.selectByWellLogId(wellLogId);
     }
 
     @Override
-    public Long getWellLogIdByFileName(String fileName) {
-        Long digital = new Long(1);
-        wellLogMapper.getWellLogByFileName(fileName);
-        return digital;
+    public String checkAndInsertWellLog(String fileName) {
+        // 检查 fileName 是否已存在
+        String existingWellLogId = wellLogMapper.getWellLogIdByFileName(fileName);
+        if (existingWellLogId != null) {
+            return existingWellLogId;
+        }
+        // 如果不存在，则插入新记录
+        WellLogPO newWellLog = new WellLogPO();
+        newWellLog.setId(fileName); // 生成唯一 ID
+        wellLogMapper.insert(newWellLog);
+        return newWellLog.getId();
     }
 
-
+    @Override
+    public String getWellLogIdByFileName(String fileName) {
+        return mappingMapper.getWellLogIdByFileName(fileName);
+    }
 }

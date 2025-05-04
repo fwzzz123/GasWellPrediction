@@ -18,13 +18,13 @@ public interface WellInfoService extends IService<WellInfoPO> {
 
     public WellLasPO getById(Long id);
 
+
+
     //这个函数检查ell_Las_Info的外键well_id然后根据well的缺失值，补全表Well_Las_Info的well_id的函数
     public void updateWellIds();
 
     //这个函数检查Well_Las_Info表的well_name和Well表的well_name，然后将已有的未插入Well表的函数插入well_name字段
     int insertMissingWells();
-
-    WellInfoPO getByWellId(String wellId);
 
     void insert(WellInfoPO wellInfo);
 
@@ -32,5 +32,18 @@ public interface WellInfoService extends IService<WellInfoPO> {
 
     void insertCurveMapping(List<WellLogCurveMappingPO> mappingList);
 
+    // 查询是否存在记录
+    boolean existsByWellId(String wellId);
 
+    // 新增记录
+    void createWellInfo(WellInfoPO wellInfo);
+
+    // 删除记录
+    void deleteWellInfo(String wellId);
+
+    // 更新记录
+    void updateWellInfo(WellInfoPO wellInfo);
+
+    // 查询单条记录
+    WellInfoPO queryWellInfo(String wellId);
 }

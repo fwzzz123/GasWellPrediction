@@ -14,9 +14,17 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface WellInfoMapper extends BaseMapper<WellInfoPO> {
 
-    WellInfoPO getByWellId(String wellName);
+    boolean existsByWellId(String wellId);
 
     void insertWellInfo(WellInfoPO wellInfo);
+
+    void deleteByWellId(String wellId);
+
+    void updateByWellId(WellInfoPO wellInfo);
+
+    WellInfoPO selectByWellId(String wellId);
+
+    WellInfoPO createByWellId(String wellId);
 
     WellInfoPO getByWellName(String wellName);
 

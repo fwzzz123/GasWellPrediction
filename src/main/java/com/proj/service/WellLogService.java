@@ -14,9 +14,25 @@ import java.util.List;
 
 public interface WellLogService extends IService<WellLogCurveMappingPO> {
 
-    void saveMappings(Long wellLogId, List<WellLogCurveMappingPO> mappings);
+    void saveMappings(List<WellLogCurveMappingPO> mappings);
 
-    List<WellLogCurveMappingPO> getMappingsByWellLogId(Long wellLogId);
+    List<WellLogCurveMappingPO> getMappingsByWellLogId(String wellLogId);
 
-    Long getWellLogIdByFileName(String fileName);
+    /**
+     * 获取或创建 wellLogId
+     * @param fileName 文件名
+     * @return wellLogId
+     */
+//    String getOrCreateWellLogId(String fileName);
+
+    /**
+     * 检查 fileName 是否存在于 Well_Log 表中，如果不存在则插入新记录
+     * @param fileName 文件名
+     * @return 对应的 wellLogId
+     */
+    String checkAndInsertWellLog(String fileName);
+
+    String getWellLogIdByFileName(String fileName);
+
+
 }

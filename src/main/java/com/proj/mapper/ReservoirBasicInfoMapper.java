@@ -17,6 +17,34 @@ public interface ReservoirBasicInfoMapper extends BaseMapper<ReservoirBasicInfoP
 
     int insertReservoirBasicInfo(ReservoirBasicInfoPO reservoirBasicInfo);
 
+    /**
+     * 根据名称创建气藏信息
+     * @param reservoirName 气藏名称
+     * @return 创建的气藏 ID
+     */
+    int insert(ReservoirBasicInfoPO reservoir);
+
+    /**
+     * 根据 ID 删除气藏信息
+     * @param reservoirId 气藏 ID
+     * @return 删除的记录数
+     */
+    int deleteById(int reservoirId);
+
+    /**
+     * 根据 ID 更新气藏信息
+     * @param reservoir 气藏对象
+     * @return 更新的记录数
+     */
+    int updateById(ReservoirBasicInfoPO reservoir);
+
+    /**
+     * 根据 ID 查询气藏信息
+     * @param reservoirId 气藏 ID
+     * @return 气藏对象
+     */
+    ReservoirBasicInfoPO selectById(int reservoirId);
+
 }
 
 
