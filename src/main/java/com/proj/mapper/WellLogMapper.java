@@ -3,9 +3,11 @@ package com.proj.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.proj.entity.po.WellLogCurveMappingPO;
 import com.proj.entity.po.WellLogPO;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface WellLogMapper extends BaseMapper<WellLogCurveMappingPO> {
 
     /**

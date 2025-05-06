@@ -1,5 +1,6 @@
 package com.proj.entity.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -15,55 +16,63 @@ import java.math.BigDecimal;
 @TableName(value ="Reservoir_Basic_Info")
 @Data
 public class ReservoirBasicInfoPO implements Serializable {
+
+
     /**
-     * 
+     * 气藏ID，主键
      */
-    @TableId
+    @TableId(value = "Reservoir_ID", type = IdType.AUTO)
     private Integer reservoirId;
 
     /**
-     * 
+     * 气藏名称
      */
+    @TableField("Reservoir_Name")
     private String reservoirName;
 
     /**
-     * 
+     * 气藏位置
      */
+    @TableField("Location")
     private String location;
 
     /**
-     * 
+     * 地层类型
      */
+    @TableField("Formation_Type")
     private String formationType;
 
     /**
-     * 
+     * 气藏深度（单位：米）
      */
+    @TableField("Depth")
     private BigDecimal depth;
 
     /**
-     * 
+     * 孔隙度（单位：%）
      */
+    @TableField("Porosity")
     private BigDecimal porosity;
 
-    /**
-     * 
-     */
+    @TableField("Permeability")
     private BigDecimal permeability;
 
     /**
-     * 
+     * 气藏压力（单位：MPa）
      */
+    @TableField("Reservoir_Pressure")
     private BigDecimal reservoirPressure;
 
     /**
-     * 
+     * 原油粘度（单位：mPa·s）
      */
+    @TableField("Oil_Viscosity")
     private BigDecimal oilViscosity;
 
     /**
-     * 
+     * 初始原油量（单位：百万桶）
      */
+    @TableField("Initial_Oil_In_Place")
     private BigDecimal initialOilInPlace;
 
     @TableField(exist = false)

@@ -69,4 +69,6 @@ public class WellController {
         return wellLogService.getMappingsByWellLogId(wellLogId);
     }
 
+
+
 }

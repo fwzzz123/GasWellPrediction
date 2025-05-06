@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.WellExplanationsPOMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.po.WellExplanationsPO">
+            <id property="explainId" column="explain_id" jdbcType="OTHER"/>
+            <result property="wellId" column="well_id" jdbcType="VARCHAR"/>
+            <result property="logType" column="log_type" jdbcType="INTEGER"/>
+            <result property="startDepth" column="start_depth" jdbcType="FLOAT"/>
+            <result property="endDepth" column="end_depth" jdbcType="FLOAT"/>
+            <result property="thickness" column="thickness" jdbcType="FLOAT"/>
+            <result property="clayContent" column="clay_content" jdbcType="FLOAT"/>
+            <result property="porosity" column="porosity" jdbcType="FLOAT"/>
+            <result property="waterSaturation" column="water_saturation" jdbcType="FLOAT"/>
+            <result property="permeability" column="permeability" jdbcType="FLOAT"/>
+            <result property="hydrocarbonSaturation" column="hydrocarbon_saturation" jdbcType="FLOAT"/>
+            <result property="startVerticalDepth" column="start_vertical_depth" jdbcType="FLOAT"/>
+            <result property="endVerticalDepth" column="end_vertical_depth" jdbcType="FLOAT"/>
+            <result property="verticalThickness" column="vertical_thickness" jdbcType="FLOAT"/>
+            <result property="startTvt" column="start_tvt" jdbcType="FLOAT"/>
+            <result property="endTvt" column="end_tvt" jdbcType="FLOAT"/>
+            <result property="tvtThickness" column="tvt_thickness" jdbcType="FLOAT"/>
+            <result property="gamma" column="gamma" jdbcType="FLOAT"/>
+            <result property="deepResistivity" column="deep_resistivity" jdbcType="FLOAT"/>
+            <result property="apparentResistivity" column="apparent_resistivity" jdbcType="FLOAT"/>
+            <result property="density" column="density" jdbcType="FLOAT"/>
+            <result property="neutron" column="neutron" jdbcType="FLOAT"/>
+            <result property="acoustic" column="acoustic" jdbcType="FLOAT"/>
+            <result property="totalHydrocarbon" column="total_hydrocarbon" jdbcType="FLOAT"/>
+            <result property="hydrocarbonThickness" column="hydrocarbon_thickness" jdbcType="FLOAT"/>
+            <result property="oilLevel" column="oil_level" jdbcType="VARCHAR"/>
+            <result property="lithology" column="lithology" jdbcType="VARCHAR"/>
+            <result property="conclusion" column="conclusion" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        explain_id,well_id,log_type,
+        start_depth,end_depth,thickness,
+        clay_content,porosity,water_saturation,
+        permeability,hydrocarbon_saturation,start_vertical_depth,
+        end_vertical_depth,vertical_thickness,start_tvt,
+        end_tvt,tvt_thickness,gamma,
+        deep_resistivity,apparent_resistivity,density,
+        neutron,acoustic,total_hydrocarbon,
+        hydrocarbon_thickness,oil_level,lithology,
+        conclusion
+    </sql>
+</mapper>

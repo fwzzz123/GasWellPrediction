@@ -13,7 +13,7 @@ import java.util.Map;
 */
 public interface WellLasInfoService extends IService<WellLasInfo> {
 
-    String savelas(Map<String, String> wellInfoMap);
+    String savelas(MultipartFile file);
 
     List<WellLasInfo> getWellLas();
 
