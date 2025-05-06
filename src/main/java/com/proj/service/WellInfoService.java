@@ -26,7 +26,7 @@ public interface WellInfoService extends IService<WellInfoPO> {
     //这个函数检查Well_Las_Info表的well_name和Well表的well_name，然后将已有的未插入Well表的函数插入well_name字段
     int insertMissingWells();
 
-    void insert(WellInfoPO wellInfo);
+    boolean insert(WellInfoPO wellInfo);
 
     WellInfoPO getByWellName(String wellName);
 

@@ -98,8 +98,9 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
 
     @Override
-    public void insert(WellInfoPO wellInfo) {
+    public boolean insert(WellInfoPO wellInfo) {
         wellInfoMapper.insert(wellInfo);
+        return false;
     }
 
     @Override
@@ -142,6 +143,8 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
     public WellInfoPO queryWellInfo(String wellId) {
         return wellInfoMapper.selectByWellId(wellId);
     }
+
+
 
 //这里有逻辑错误，在这个时候ID还没有被插入，所以不存在ID
 //    @Override

@@ -162,4 +162,62 @@ public class WellLogDataPO implements Serializable {
      */
     @TableField("update_time")
     private Timestamp updateTime;
+
+
+    /**
+     * 气藏温度（ 或 K，根据单位）
+     */
+    @CommentUtils("气藏温度")
+    @TableField("reservoir_temperature")
+    private BigDecimal reservoirTemperature;
+
+    /**
+     * 气体黏度（mPa·s）
+     */
+    @CommentUtils("气体黏度")
+    @TableField("gas_viscosity")
+    private BigDecimal Viscosity;
+
+    /**
+     * 偏差因子 Z
+     */
+    @CommentUtils("偏差因子 Z")
+    @TableField("gas_deviation_factor")
+    private BigDecimal DeviationFactor;
+
+    /**
+     * 气井半径（m）
+     */
+    @CommentUtils("气井半径")
+    @TableField("wellbore_radius")
+    private BigDecimal wellboreRadius;
+
+    /**
+     * 泄气半径（m）
+     */
+    @CommentUtils("泄气半径")
+    @TableField("drainage_radius")
+    private BigDecimal drainageRadius;
+
+    /**
+     * 表皮因子
+     */
+    @CommentUtils("表皮因子")
+    @TableField("skin_factor")
+    private BigDecimal skinFactor;
+
+    /**
+     * 地层压力（MPa）
+     */
+    @CommentUtils("地层压力")
+    @TableField("reservoir_pressure")
+    private BigDecimal reservoirPressure;
+
+    /**
+     * 井底流压（MPa）
+     */
+    @CommentUtils("井底流压")
+    @TableField("bottomhole_pressure")
+    private BigDecimal bottomholePressure;
+
 }

@@ -144,6 +144,14 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
                             String lasCurveName = line.substring(0, line.indexOf(".")).trim();
                             String description = line.contains(":") ? line.substring(line.indexOf(":") + 1).trim() : "";
 
+                            // ✅ 新增：跳过注释性字段（如 #MNEM、#DEPTH 等）
+                            if (lasCurveName.startsWith("#") ||
+                                    lasCurveName.toUpperCase().startsWith("#MNEM") ||
+                                    "unit".equalsIgnoreCase(lasCurveName) ||
+                                    "value".equalsIgnoreCase(lasCurveName)) {
+                                continue;
+                            }
+
                             Map<String, String> curveInfo = new HashMap<>();
                             curveInfo.put("lasCurveName", lasCurveName);
                             curveInfo.put("description", description);
@@ -169,12 +177,54 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
 
 
 
+    //    @Override
+//    public void insertWellLogFromParsedHeader(List<MultipartFile> files) {
+//        // 调用 parseWellHeader 方法生成 parsedHeaders
+//        List<Map<String, Object>> parsedHeaders = parseWellHeader(files);
+//
+//        // 原有逻辑保持不变
+//        if (parsedHeaders == null || parsedHeaders.isEmpty()) {
+//            throw new IllegalArgumentException("解析后的头部信息为空");
+//        }
+//
+//        for (Map<String, Object> header : parsedHeaders) {
+//            String fileName = (String) header.get("fileName");
+//            Map<String, Object> wellHeader = (Map<String, Object>) header.get("wellHeader");
+//
+//            // 提取字段
+//            String wellId = fileName;
+//            String id = fileName.split("\\(")[0]; // 提取文件名部分
+//            Double startDepth = parseDepth((String) wellHeader.get("strt"));
+//            Double endDepth = parseDepth((String) wellHeader.get("stop"));
+//            Double step = parseStep((String) wellHeader.get("step"));
+//
+//            // 检查 Well_Info 表中是否存在 Well_ID 为 fileName 的记录
+//            boolean wellExists = wellInfoService.existsByWellId(wellId);
+//            if (!wellExists) {
+//                // 如果不存在，则插入新记录
+//                WellInfoPO wellInfo = new WellInfoPO();
+//                wellInfo.setWellId(wellId);
+//                wellInfoService.createWellInfo(wellInfo);
+//            }
+//
+//            // 创建 WellLogPO 对象
+//            WellLogPO wellLogPO = new WellLogPO();
+//            wellLogPO.setId(wellId);
+//            wellLogPO.setWellId(id);
+//            wellLogPO.setStartDepth(startDepth);
+//            wellLogPO.setEndDepth(endDepth);
+//            wellLogPO.setStep(step);
+//            wellLogPO.setCreateTime(LocalDateTime.now());
+//            wellLogPO.setUpdateTime(LocalDateTime.now());
+//
+//            // 插入数据库
+//            wellLogMapper.insert(wellLogPO);
+//        }
+//    }
     @Override
     public void insertWellLogFromParsedHeader(List<MultipartFile> files) {
-        // 调用 parseWellHeader 方法生成 parsedHeaders
         List<Map<String, Object>> parsedHeaders = parseWellHeader(files);
 
-        // 原有逻辑保持不变
         if (parsedHeaders == null || parsedHeaders.isEmpty()) {
             throw new IllegalArgumentException("解析后的头部信息为空");
         }
@@ -183,36 +233,66 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
             String fileName = (String) header.get("fileName");
             Map<String, Object> wellHeader = (Map<String, Object>) header.get("wellHeader");
 
-            // 提取字段
-            String wellId = fileName;
-            String id = fileName.split("\\(")[0]; // 提取文件名部分
+            // id 保持原文件名（如 well1.las）
+            String id = fileName;
+
+            // wellId 是去掉 .las/.LAS/.Las 后缀的井名（如 well1）
+            String wellId = removeExtension(fileName);
+
             Double startDepth = parseDepth((String) wellHeader.get("strt"));
             Double endDepth = parseDepth((String) wellHeader.get("stop"));
             Double step = parseStep((String) wellHeader.get("step"));
 
-            // 检查 Well_Info 表中是否存在 Well_ID 为 fileName 的记录
+            // 检查 Well_Info 表是否存在对应记录
             boolean wellExists = wellInfoService.existsByWellId(wellId);
             if (!wellExists) {
-                // 如果不存在，则插入新记录
                 WellInfoPO wellInfo = new WellInfoPO();
                 wellInfo.setWellId(wellId);
                 wellInfoService.createWellInfo(wellInfo);
             }
 
-            // 创建 WellLogPO 对象
+            // 创建并保存 WellLogPO
             WellLogPO wellLogPO = new WellLogPO();
-            wellLogPO.setId(id);
-            wellLogPO.setWellId(wellId);
+            wellLogPO.setId(id);           // 保留原始文件名作为 ID
+            wellLogPO.setWellId(wellId);   // 去掉后缀作为井名
             wellLogPO.setStartDepth(startDepth);
             wellLogPO.setEndDepth(endDepth);
             wellLogPO.setStep(step);
             wellLogPO.setCreateTime(LocalDateTime.now());
             wellLogPO.setUpdateTime(LocalDateTime.now());
 
-            // 插入数据库
             wellLogMapper.insert(wellLogPO);
         }
     }
+
+    /**
+     * 移除文件名的扩展名（支持 .las/.LAS/.Las 等格式）
+     */
+    private String removeExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return fileName;
+        }
+
+        int dotIndex = -1;
+        // 从后往前找 .las 或 .LAS 或 .Las
+        for (int i = 0; i < 3 && i < fileName.length(); i++) {
+            int pos = fileName.length() - 1 - i;
+            if ((pos >= 0) && (fileName.charAt(pos) == 's' || fileName.charAt(pos) == 'S')) {
+                // 可能是 .las 结尾
+                if (pos >= 4 && fileName.regionMatches(true, pos - 3, ".las", 0, 4)) {
+                    dotIndex = pos - 3;
+                    break;
+                }
+            }
+        }
+
+        if (dotIndex > 0) {
+            return fileName.substring(0, dotIndex);
+        }
+
+        return fileName;
+    }
+
 
     /**
      * 解析深度字段（去除前缀 M 并转换为数值）

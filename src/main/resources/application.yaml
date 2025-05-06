@@ -36,3 +36,7 @@ logging:
     dateformat: HH:mm:ss
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
+
+mybatis-plus:
+  configuration:
+    mapUnderscoreToCamelCase: true
