@@ -73,18 +73,219 @@ public class LASController {
 
     //用户上传las文件，解析las文件内容插入到WellLasInfo和WellLasCurveInfo俩个表中
     //插入到WellLasInfo表中解决外键问题先看wellId是否存在若不存在则插入WellInfo表中
+//    @PostMapping("/getlasinfo")
+//    public ResponseEntity<String> getLasInfo(@RequestParam("files") List<MultipartFile> files){
+//        //Map<String, String> wellInfoMap = new LinkedHashMap<>();
+//        //Map<String, String> wellInfoDesMap = new LinkedHashMap<>();
+//
+//        //Map<String, String> curveInfoMap = new LinkedHashMap<>();
+//        //Map<String, String> curveInfoDesMap = new LinkedHashMap<>();
+//        //List<WellLasInfo> wellLasInfoList = new ArrayList<>();
+//
+//        //WellLasInfo wellLasInfo = new WellLasInfo();
+//        if(files.isEmpty()){
+//            return ResponseEntity.badRequest().body("未提供文件");
+//        }
+//        for(MultipartFile file:files){
+//            String line;
+//            Map<String, String> wellLasInfoMap = new LinkedHashMap<>();
+//            //Map<String, String> curveInfoMap = new LinkedHashMap<>();
+//            boolean inWellInformationBlock = false;
+//            //boolean inCurveInformationBlock = false;
+//            //boolean inDataBlock = false;
+//
+//            //从文件名中提取wellId作为主键
+//            String wellId = file.getOriginalFilename().split("_")[0];
+//
+//            WellInfoPO existing = wellInfoService.getByWellName(wellId);
+//            if (existing == null) {
+//                WellInfoPO wellInfo = new WellInfoPO();
+//                wellInfo.setWellId(wellId);
+//                if (wellId.startsWith("BD")) {
+//                    wellInfo.setReservoirId(1);
+//                } else if (wellId.startsWith("DF1-")) {
+//                    wellInfo.setReservoirId(2);
+//                } else if (wellId.startsWith("DF13")) {
+//                    wellInfo.setReservoirId(3);
+//                }else {
+//                    // 如果没有匹配到已知前缀，设置为null或默认值
+//                    wellInfo.setReservoirId(null); // 或者设置一个默认值如：0
+//                }
+//                wellInfoService.insert(wellInfo);
+//            }
+//            wellLasInfoMap.put("wellId", wellId);
+//            //让文件名作为唯一主键，方便后续查询指定文件内容
+//            wellLasInfoMap.put("lasInfoId", file.getOriginalFilename());
+//
+//
+//            try(BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))){
+//                while ((line = reader.readLine())!=null){
+//                    if (!line.startsWith("#")){
+//                        if (line.startsWith("~W")) {
+//                            inWellInformationBlock = true;
+//                        }
+//                        if (line.startsWith("~C")) {
+//                            inWellInformationBlock = false;
+//                            //inCurveInformationBlock = true;
+//                        }
+//                        /*if (line.startsWith("~P") || line.startsWith("~O")) {
+//                            inCurveInformationBlock = false;
+//                        }
+//                        if (line.startsWith("~A")) {
+//                            inCurveInformationBlock = false;
+//                            inDataBlock = true;
+//                        }*/
+//
+//
+//                        if (inWellInformationBlock) {
+//                            if (!line.startsWith("~")) {
+//                                String key = NamingUtils.toCamelCase(line.substring(0, line.indexOf(".")).trim());
+//                                String value = line.substring(line.indexOf(".") + 1).split(":")[0].replaceAll(" ", "");
+//                                //String description = line.split(":")[1].trim();
+//                                // 存储到HashMap中，避免重复键
+//                                if(key.equals("null")){
+//                                    key="absentValue";
+//                                }
+//                                if(key.equals("long")){
+//                                    key="wellLong";
+//                                }
+//                                if(value.equals("")){
+//                                    value="null";
+//                                }
+//                                if (!wellLasInfoMap.containsKey(key)) {
+//                                    wellLasInfoMap.put(key, value);
+//                                }
+//                                /*if (!wellInfoDesMap.containsKey(key)) {
+//                                    wellInfoDesMap.put(key, description);
+//                                }*/
+//                            }
+//                        }
+//
+//                    }
+//                }
+//
+//            }catch (IOException e){
+//                return ResponseEntity.badRequest().body("读取失败");
+//            }
+//            System.out.println(wellLasInfoMap);
+//            String lasInfoId = String.valueOf(wellLasInfoService.savelas(wellLasInfoMap));
+//            wellLasCurveInfoService.savelas(file,lasInfoId);
+//        }
+//        return ResponseEntity.ok("测井表头插入成功");
+//    }
     @PostMapping("/getlasinfo")
     public ResponseEntity<String> getLasInfo(@RequestParam("files") List<MultipartFile> files) {
         if (files == null || files.isEmpty()) {
             return ResponseEntity.badRequest().body("未提供文件");
         }
-        try {
-            for(MultipartFile file: files) {
-                String lasInfoId = wellLasInfoService.savelas(file);
-                wellLasCurveInfoService.savelas(file, lasInfoId);
+
+        for (MultipartFile file : files) {
+            String line;
+            Map<String, String> wellLasInfoMap = new LinkedHashMap<>();
+
+            // 从文件名中提取 wellId（去除 .las 扩展名）
+            String originalFilename = file.getOriginalFilename();
+            if (originalFilename == null) {
+                return ResponseEntity.badRequest().body("无法获取原始文件名");
             }
-        }catch (Exception e){
-            e.printStackTrace();
+
+            // 提取不带扩展名的文件名作为 wellId
+            String wellId;
+            if (originalFilename.contains(".")) {
+                wellId = originalFilename.substring(0, originalFilename.lastIndexOf(".")).trim();
+            } else {
+                wellId = originalFilename.trim(); // 没有扩展名时直接使用原文件名
+            }
+
+            // 检查井是否已存在
+            WellInfoPO existingWell = wellInfoService.getByWellName(wellId);
+            if (existingWell == null) {
+                WellInfoPO wellInfo = new WellInfoPO();
+                wellInfo.setWellId(wellId);
+
+                // 根据前缀设置 Reservoir ID
+                if (wellId.startsWith("BD")) {
+                    wellInfo.setReservoirId(1);
+                } else if (wellId.startsWith("DF1-")) {
+                    wellInfo.setReservoirId(2);
+                } else if (wellId.startsWith("DF13")) {
+                    wellInfo.setReservoirId(3);
+                } else {
+                    wellInfo.setReservoirId(null); // 或者设置默认值
+                }
+
+                // 插入新井信息
+                try {
+                    boolean inserted = wellInfoService.insert(wellInfo);
+                    if (!inserted) {
+                        return ResponseEntity.status(500).body("插入井信息失败: " + wellId);
+                    }
+                } catch (Exception e) {
+                    return ResponseEntity.status(500).body("插入井信息时发生异常: " + e.getMessage());
+                }
+            }
+
+            // 构建 WellLasInfo 的映射数据
+            wellLasInfoMap.put("wellId", wellId);
+            wellLasInfoMap.put("lasInfoId", originalFilename); // 文件名为唯一标识
+
+            boolean inWellInformationBlock = false;
+
+            // 开始解析文件内容
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+                while ((line = reader.readLine()) != null) {
+                    if (line.startsWith("#")) continue;
+
+                    // 判断段落状态
+                    if (line.startsWith("~W")) {
+                        inWellInformationBlock = true;
+                    } else if (line.startsWith("~C")) {
+                        inWellInformationBlock = false;
+                    }
+
+                    // 解析 ~W 段（井基本信息）
+                    if (inWellInformationBlock && !line.startsWith("~")) {
+                        // 提取 key 和 value
+                        int dotIndex = line.indexOf(".");
+                        if (dotIndex == -1) continue;
+
+                        String rawKey = line.substring(0, dotIndex).trim();
+                        String keyValuePart = line.substring(dotIndex + 1).split(":")[0].replaceAll("\\s+", "");
+
+                        // 转换为驼峰命名
+                        String key = NamingUtils.toCamelCase(rawKey);
+
+                        // 处理特殊 key 名称
+                        if ("null".equals(key)) {
+                            key = "absentValue";
+                        } else if ("long".equals(key)) {
+                            key = "wellLong";
+                        }
+
+                        String value = keyValuePart.isEmpty() ? "null" : keyValuePart;
+
+                        // 避免重复键
+                        if (!wellLasInfoMap.containsKey(key)) {
+                            wellLasInfoMap.put(key, value);
+                        }
+                    }
+                }
+
+            } catch (IOException e) {
+                return ResponseEntity.status(500).body("读取文件失败: " + e.getMessage());
+            }
+
+            // 打印调试信息
+            System.out.println("解析出的井信息: " + wellLasInfoMap);
+
+            // 保存井信息到 Well_Las_Info 表
+            try {
+                Object lasInfoId = wellLasInfoService.savelas(wellLasInfoMap);
+                // 保存曲线信息到 Well_Las_Curve_Info 表
+                wellLasCurveInfoService.savelas(file, String.valueOf(lasInfoId));
+            } catch (Exception e) {
+                return ResponseEntity.status(500).body("保存测井信息失败: " + e.getMessage());
+            }
         }
 
         return ResponseEntity.ok("测井表头插入成功");
