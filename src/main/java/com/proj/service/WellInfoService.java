@@ -46,4 +46,13 @@ public interface WellInfoService extends IService<WellInfoPO> {
 
     // 查询单条记录
     WellInfoPO queryWellInfo(String wellId);
+
+    /*
+    *@陈
+    * 查询所有的井名
+    * */
+    // 查询所有 well_id
+    List<String> getAllWellIds();
+
+
 }
