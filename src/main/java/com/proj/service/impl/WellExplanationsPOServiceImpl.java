@@ -44,13 +44,14 @@ public class WellExplanationsPOServiceImpl extends ServiceImpl<WellExplanationsP
         beanMap.put("wellId",wellId);
         beanMap.put("logType",logType);
         for (Map.Entry<String,Object> entry : ExplainInfoMap.entrySet()){
-            if(beanMap.containsKey(NamingUtils.toCamelCase(entry.getKey()))){
-                if(entry.getKey().equals("oil_level") || entry.getKey().equals("lithology") || entry.getKey().equals("conclusion")){
-                    beanMap.put(NamingUtils.toCamelCase(entry.getKey()),entry.getValue());
-                }else {
-                    beanMap.put(NamingUtils.toCamelCase(entry.getKey()),Double.valueOf(String.valueOf(entry.getValue())));
+            if(entry.getValue() != null){
+                if(beanMap.containsKey(NamingUtils.toCamelCase(entry.getKey()))){
+                    if(entry.getKey().equals("oil_level") || entry.getKey().equals("lithology") || entry.getKey().equals("conclusion")){
+                        beanMap.put(NamingUtils.toCamelCase(entry.getKey()),entry.getValue());
+                    }else {
+                        beanMap.put(NamingUtils.toCamelCase(entry.getKey()),Double.valueOf(String.valueOf(entry.getValue())));
+                    }
                 }
-
             }
         }
         return wellExplanationsPO;

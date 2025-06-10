@@ -2,6 +2,8 @@ package com.proj.controller;
 
 import com.proj.entity.dto.FieldCommentDTO;
 import com.proj.entity.dto.PvtTestDataImportDTO;
+import com.proj.entity.po.WellLogDataPO;
+import com.proj.entity.vo.WellLogDataVO;
 import com.proj.service.PvtTestDataService;
 import com.proj.service.WellLogDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +46,8 @@ public class LogController {
         return "数据导入成功";
     }
 
+    @PostMapping("/getDataByDept")
+    public List<WellLogDataVO> getDataByDept(@RequestParam double start_dept , @RequestParam double stop_dept){
+        return wellLogDataService.getDataByDept(start_dept,stop_dept);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.cglib.beans.BeanMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,12 +20,17 @@ public class ExplainController {
     private WellExplanationsPOService explanationsPOService;
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveExplanations(@RequestBody Map<String,Object> data){
+    public Map<String, Object> saveExplanations(@RequestBody Map<String,Object> data){
+        System.out.println(data);
+        Map<String, Object> response = new HashMap<>();
         try {
             explanationsPOService.saveExplanations(data);
         }catch (Exception e){
+            response.put("code", 1);
             e.printStackTrace();
+            return response;
         }
-        return ResponseEntity.ok("保存成功");
+        response.put("code", 0);
+        return response;
     }
 }

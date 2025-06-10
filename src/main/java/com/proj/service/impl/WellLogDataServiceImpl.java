@@ -411,7 +411,15 @@ public class WellLogDataServiceImpl extends ServiceImpl<WellLogDataMapper, WellL
         return result;
     }
 
-//    [ K_{\text{气}} = \text{测压流度} \times \text{泥浆电镀} \times \frac{\text{气相相对渗透率}}{\text{水相相对渗透率}} ]
+    @Override
+    public List<WellLogDataVO> getDataByDept(double start_dept, double stop_dept) {
+        LambdaQueryWrapper<WellLogDataVO> logDataPOLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        logDataPOLambdaQueryWrapper.between(WellLogDataVO::getDepth,start_dept,stop_dept);
+        List<WellLogDataVO> logDataPOList = wellLogDataMapper.selectList(logDataPOLambdaQueryWrapper);
+        return logDataPOList;
+    }
+
+    //    [ K_{\text{气}} = \text{测压流度} \times \text{泥浆电镀} \times \frac{\text{气相相对渗透率}}{\text{水相相对渗透率}} ]
     private double calculateEffectivePermeability(WellLogDataPO dataLog, PvtTestDataPO dataPvt) {
         double mobility = dataPvt.getEstimatedMobility().toBigInteger().doubleValue(); // 测压流度
 //        double mudElectrolysis = calculateViscosity(); // 粘度

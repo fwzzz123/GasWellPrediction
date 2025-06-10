@@ -71,4 +71,5 @@ public interface WellLogDataService extends IService<WellLogDataVO> {
      */
     Map<String, List<double[]>> generateEffectivePermeabilityPlotData();
 
+    List<WellLogDataVO> getDataByDept(double start_dept, double stop_dept);
 }
