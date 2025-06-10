@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.proj.entity.po.WellLogCurveMappingPO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
 * @author L
 * @description 针对表【Well_Info】的数据库操作Mapper
@@ -29,6 +31,12 @@ public interface WellInfoMapper extends BaseMapper<WellInfoPO> {
     WellInfoPO getByWellName(String wellName);
 
     void insertCurveMapping(WellLogCurveMappingPO mapping);
+
+    /*
+    * @陈
+    * 返回所有井名*/
+    List<String> selectAllWellIds();
+
 
 }
 

@@ -104,6 +104,12 @@
         SELECT COUNT(*) > 0 FROM Well_Info WHERE Well_ID = #{wellId}
     </select>
 
+    <!-- 返回所有的井名 -->
+    <select id="selectAllWellIds" resultType="string">
+        SELECT well_id FROM Well_Info
+    </select>
+
+
 
 
 </mapper>

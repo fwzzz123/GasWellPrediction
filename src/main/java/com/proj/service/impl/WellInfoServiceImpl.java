@@ -144,6 +144,15 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         return wellInfoMapper.selectByWellId(wellId);
     }
 
+    /*
+    * @陈
+    * 返回所有井名
+    * */
+    @Override
+    public List<String> getAllWellIds() {
+        return wellInfoMapper.selectAllWellIds();
+    }
+
 
 
 //这里有逻辑错误，在这个时候ID还没有被插入，所以不存在ID

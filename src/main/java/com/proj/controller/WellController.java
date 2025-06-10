@@ -70,5 +70,14 @@ public class WellController {
     }
 
 
+    // @陈义嘉
+    @GetMapping("/getAllWellIds")
+    public ResponseEntity<List<String>> getAllWellIds() {
+        List<String> wellIds = wellInfoService.getAllWellIds();
+        return ResponseEntity.ok(wellIds);
+    }
+
+
+
 
 }
