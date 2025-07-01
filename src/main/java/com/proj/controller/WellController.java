@@ -61,6 +61,7 @@ public class WellController {
     //
     @PostMapping("/saveMatchingwells")
     public String saveCurveMappingWells(@RequestBody CurveMappingRequest request) {
+        System.out.println(request.getMappingList());
         wellLogService.saveMappings(request.getMappingList());
         return "保存成功";
     }

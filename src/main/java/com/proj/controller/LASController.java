@@ -3,6 +3,7 @@ package com.proj.controller;
 
 import com.proj.entity.dto.CurveMappingDTO;
 import com.proj.entity.dto.ImportResultDTO;
+import com.proj.entity.po.RelativePermeabilityPO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
@@ -30,6 +31,9 @@ import java.util.Map;
 public class LASController {
     @Autowired
     private WellLasInfoService wellLasInfoService;
+
+    @Autowired
+    private RelativePermeabilityPOService relativePermeabilityPOService;
 
     @Autowired
     private WellLogService wellLogService;
@@ -81,7 +85,10 @@ public class LASController {
         try {
             for(MultipartFile file: files) {
                 String lasInfoId = wellLasInfoService.savelas(file);
-                wellLasCurveInfoService.savelas(file, lasInfoId);
+                if(lasInfoId.equals("exist"));
+                else{
+                    wellLasCurveInfoService.savelas(file, lasInfoId);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -195,4 +202,32 @@ public class LASController {
         }
     }
 
+    @GetMapping("/getRelativePermeabilit")
+    public List<RelativePermeabilityPO> getAll() {
+        return relativePermeabilityPOService.list();
+    }
+
+    // 根据 ID 查询
+    @GetMapping("/getRelativePermeabilitById")
+    public RelativePermeabilityPO getById(@RequestParam Integer id) {
+        return relativePermeabilityPOService.getById(id);
+    }
+
+    // 新增
+    @PostMapping("/insertRelativePermeabilit")
+    public boolean create(@RequestBody RelativePermeabilityPO entity) {
+        return relativePermeabilityPOService.save(entity);
+    }
+
+    // 修改
+    @PutMapping("/updateRelativePermeabilit")
+    public boolean update(@RequestBody RelativePermeabilityPO entity) {
+        return relativePermeabilityPOService.updateById(entity);
+    }
+
+    // 删除
+    @DeleteMapping("/deleteRelativePermeabilit")
+    public boolean delete(@PathVariable Integer id) {
+        return relativePermeabilityPOService.removeById(id);
+    }
 }

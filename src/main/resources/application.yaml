@@ -21,7 +21,7 @@ spring:
     username: SYSTEM
     password: 654321
 
-    url: jdbc:kingbase8://192.168.3.21:54321/test?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:kingbase8://cn-sc-plc-2.ofalias.net:55980/test?useUnicode=true&characterEncoding=UTF-8
 
   servlet:
     multipart:

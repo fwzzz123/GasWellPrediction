@@ -69,8 +69,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="WellExplanationsPO" />
-                  <option name="tableName" value="well_explanations" />
+                  <option name="className" value="RelativePermeabilityPO" />
+                  <option name="tableName" value="Relative_Permeability" />
                 </TableUIInfo>
               </list>
             </option>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.mapper.RelativePermeabilityPOMapper">
+
+    <resultMap id="BaseResultMap" type="com.proj.entity.po.RelativePermeabilityPO">
+            <id property="permeabilityId" column="Permeability_ID" jdbcType="OTHER"/>
+            <result property="wellId" column="Well_ID" jdbcType="VARCHAR"/>
+            <result property="sw" column="Sw" jdbcType="FLOAT"/>
+            <result property="krg" column="Krg" jdbcType="FLOAT"/>
+            <result property="krw" column="Krw" jdbcType="FLOAT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Permeability_ID,Well_ID,Sw,
+        Krg,Krw
+    </sql>
+</mapper>

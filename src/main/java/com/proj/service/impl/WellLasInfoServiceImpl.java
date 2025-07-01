@@ -1,6 +1,7 @@
 package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.proj.entity.WellLasInfo;
 import com.proj.entity.po.WellInfoPO;
@@ -52,8 +53,9 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
         //从文件名中提取wellId作为主键
         String wellId = file.getOriginalFilename().split("_")[0];
 
-        WellInfoPO existing = wellInfoService.getByWellName(wellId);
-        if (existing == null) {
+        Boolean existing = wellInfoService.existsByWellId(wellId);
+        System.out.println(existing);
+        if (!existing) {
             WellInfoPO wellInfo = new WellInfoPO();
             wellInfo.setWellId(wellId);
             if (wellId.startsWith("BD")) {
@@ -70,6 +72,11 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
         }
         wellLasInfoMap.put("wellId", wellId);
         //让文件名作为唯一主键，方便后续查询指定文件内容
+        LambdaQueryWrapper<WellLasInfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(WellLasInfo::getLasInfoId, file.getOriginalFilename());
+        if(wellLasInfoMapper.selectCount(wrapper)>0){
+            return "exist";
+        }
         wellLasInfoMap.put("lasInfoId", file.getOriginalFilename());
 
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))){
