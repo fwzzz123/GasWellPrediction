@@ -33,4 +33,8 @@ public class ExplainController {
         response.put("code", 0);
         return response;
     }
+    @GetMapping("/hello")
+    public String helloHttps() {
+        return "hellohttps";
+    }
 }

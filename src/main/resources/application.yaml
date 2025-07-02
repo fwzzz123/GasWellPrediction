@@ -2,6 +2,11 @@
 server:
   address: 0.0.0.0  # 监听所有网络接口（局域网可访问）
   port: 8081        # 指定端口（可选，默认8080）
+  ssl:
+    enabled: true
+    key-store-type: JKS
+    key-store-password: 123456
+    key-store: classpath:boothttps.jks
 
 spring:
   redis:
