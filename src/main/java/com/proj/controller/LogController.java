@@ -50,4 +50,5 @@ public class LogController {
     public List<WellLogDataVO> getDataByDept(@RequestParam double start_dept , @RequestParam double stop_dept){
         return wellLogDataService.getDataByDept(start_dept,stop_dept);
     }
+
 }

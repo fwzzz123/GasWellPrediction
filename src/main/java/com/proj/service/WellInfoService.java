@@ -1,6 +1,7 @@
 package com.proj.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.proj.entity.dto.WellInfoDTO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
@@ -47,7 +48,19 @@ public interface WellInfoService extends IService<WellInfoPO> {
     // 查询单条记录
     WellInfoPO queryWellInfo(String wellId);
 
-    /*
+    List<WellInfoPO> queryWellInfoList(List<String> wellIds);
+
+    //新增井记录(DTO),从前端拿的DTO数据
+    boolean addWellInfo(WellInfoDTO dto);
+
+    List<WellInfoDTO> convertToWellInfoDTOList(List<WellInfoPO> wellInfoPOs) ;
+
+    WellInfoDTO convertToDTO(WellInfoPO po);
+
+
+
+
+        /*
     *@陈
     * 查询所有的井名
     * */

@@ -28,4 +28,6 @@ public class WellLasController {
     public List<WellLasInfo> getWellLasByWellId(@RequestParam("wellId") String wellId){
         return wellLasInfoService.getWellLasByWellId(wellId);
     }
+
+
 }

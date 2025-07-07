@@ -30,9 +30,11 @@ public class WellDataStorageServiceImpl implements WellDataStorageService {
     @Override
     public int saveWell(Map<String, String> wellInfoMap) {
         WellInfoPO wellInfoPO = new WellInfoPO();
-        wellInfoPO.setWellName(wellInfoMap.get("wellName"));
+//        wellInfoPO.setWellName(wellInfoMap.get("wellName"));
         wellInfoPO.setWellType(wellInfoMap.get("wellType"));
         String wellCapacityStr = wellInfoMap.get("wellCapacity");
+
+
         if (wellCapacityStr != null) {
             wellInfoPO.setCapacity(new BigDecimal(wellCapacityStr));
         }

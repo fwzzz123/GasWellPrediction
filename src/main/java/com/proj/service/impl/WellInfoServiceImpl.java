@@ -2,6 +2,7 @@ package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kingbase8.util.KSQLException;
+import com.proj.entity.dto.WellInfoDTO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
@@ -17,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -143,6 +145,93 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
     public WellInfoPO queryWellInfo(String wellId) {
         return wellInfoMapper.selectByWellId(wellId);
     }
+
+    @Override
+    public List<WellInfoPO> queryWellInfoList(List<String> wellIds) {
+        return wellInfoMapper.selectBatchIds(wellIds);
+    }
+
+    @Override
+    public boolean addWellInfo(WellInfoDTO dto) {
+        WellInfoPO po = new WellInfoPO();
+        po.setWellId(dto.getWellId());
+        po.setReservoirId(dto.getReservoirId());
+        po.setCapacity(dto.getCapacity());
+        po.setWellType(dto.getWellType());
+        po.setWellCoordinates(dto.getWellCoordinates());
+        po.setSection(dto.getSection());
+        po.setMudContent(dto.getMudContent());
+
+        po.setCUnit(dto.getCUnit());
+        po.setK(dto.getK());
+        po.setH(dto.getH());
+        po.setLambdaGAvg(dto.getLambdaGAvg());
+        po.setPE(dto.getPE());
+        po.setPBH(dto.getPBH());
+        po.setRE(dto.getRE());
+        po.setRW(dto.getRW());
+
+        po.setFGAvg(dto.getFGAvg());
+        po.setPhi(dto.getPhi());
+        po.setLambdaWAvg(dto.getLambdaWAvg());
+        po.setKRg(dto.getKRg());
+        po.setMuG(dto.getMuG());
+        po.setBG(dto.getBG());
+        po.setCG(dto.getCG());
+        po.setSG(dto.getSG());
+        po.setDpGdt(dto.getDpGdt());
+        po.setSW(dto.getSW());
+        po.setDSWdt(dto.getDSWdt());
+        po.setTheta(dto.getTheta());
+
+        System.out.println("生成的 PO: " + po); // 👈 打印 PO 内容
+
+
+        return wellInfoMapper.insert(po) > 0;
+
+    }
+
+    @Override
+    public List<WellInfoDTO> convertToWellInfoDTOList(List<WellInfoPO> wellInfoPOs) {
+        return wellInfoPOs.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList()); // 替代 .toList()
+    }
+
+    @Override
+    public WellInfoDTO convertToDTO(WellInfoPO po) {
+        if (po == null) return null;
+        WellInfoDTO dto = new WellInfoDTO();
+        dto.setWellId(po.getWellId());
+        dto.setReservoirId(po.getReservoirId());
+        dto.setCapacity(po.getCapacity());
+        dto.setWellType(po.getWellType());
+        dto.setWellCoordinates(po.getWellCoordinates());
+        dto.setSection(po.getSection());
+        dto.setMudContent(po.getMudContent());
+        dto.setCUnit(po.getCUnit());
+        dto.setK(po.getK());
+        dto.setH(po.getH());
+        dto.setLambdaGAvg(po.getLambdaGAvg());
+        dto.setPE(po.getPE());
+        dto.setPBH(po.getPBH());
+        dto.setRE(po.getRE());
+        dto.setRW(po.getRW());
+        dto.setFGAvg(po.getFGAvg());
+        dto.setPhi(po.getPhi());
+        dto.setLambdaWAvg(po.getLambdaWAvg());
+        dto.setKRg(po.getKRg());
+        dto.setMuG(po.getMuG());
+        dto.setBG(po.getBG());
+        dto.setCG(po.getCG());
+        dto.setSG(po.getSG());
+        dto.setDpGdt(po.getDpGdt());
+        dto.setSW(po.getSW());
+        dto.setDSWdt(po.getDSWdt());
+        dto.setTheta(po.getTheta());
+        return dto;
+    }
+
 
     /*
     * @陈

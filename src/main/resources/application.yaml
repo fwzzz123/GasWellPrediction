@@ -1,7 +1,7 @@
 
 server:
   address: 0.0.0.0  # 监听所有网络接口（局域网可访问）
-  port: 8081        # 指定端口（可选，默认8080）
+  port: 8080        # 指定端口（可选，默认8080）
   ssl:
     enabled: true
     key-store-type: JKS
@@ -9,6 +9,8 @@ server:
     key-store: classpath:boothttps.jks
 
 spring:
+
+
   redis:
     host: 192.168.3.21  # Redis服务器地址
     port: 6379       # Redis服务器连接端口
@@ -21,17 +23,26 @@ spring:
         min-idle: 0    # 连接池中的最小空闲连接
     timeout: 5000ms  # 连接超时时间（毫秒）
 
+
+
   datasource:
     driver-class-name: com.kingbase8.Driver
     username: SYSTEM
     password: 654321
-
-    url: jdbc:kingbase8://cn-sc-plc-2.ofalias.net:55980/test?useUnicode=true&characterEncoding=UTF-8
+# 开发环境url
+    url: jdbc:kingbase8://frp-dog.com:30893/test?useUnicode=true&characterEncoding=UTF-8
+# 生产环境url
+#    url: jdbc:kingbase8://192.168.3.21:54321/test?useUnicode=true&characterEncoding=UTF-8
 
   servlet:
     multipart:
       max-file-size: 50MB
       max-request-size: 100MB
+
+    jackson:
+      deserialization:
+        accept-case-insensitive-properties: true
+        fail-on-unknown-properties: false
 
 
 logging:
