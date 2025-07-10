@@ -57,7 +57,7 @@ public interface WellInfoService extends IService<WellInfoPO> {
 
     WellInfoDTO convertToDTO(WellInfoPO po);
 
-
+    WellInfoPO convertToPO(WellInfoDTO dto);
 
 
         /*

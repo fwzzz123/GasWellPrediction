@@ -97,6 +97,7 @@ public class WellController {
     }
 
 
+
     //拟稳态产能公式
     @RequestMapping("/NiwentaiAOF")
     public ResponseEntity<BigDecimal> calculateAOF(@RequestParam String wellName) {

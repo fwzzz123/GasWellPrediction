@@ -154,35 +154,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
     @Override
     public boolean addWellInfo(WellInfoDTO dto) {
         WellInfoPO po = new WellInfoPO();
-        po.setWellId(dto.getWellId());
-        po.setReservoirId(dto.getReservoirId());
-        po.setCapacity(dto.getCapacity());
-        po.setWellType(dto.getWellType());
-        po.setWellCoordinates(dto.getWellCoordinates());
-        po.setSection(dto.getSection());
-        po.setMudContent(dto.getMudContent());
-
-        po.setCUnit(dto.getCUnit());
-        po.setK(dto.getK());
-        po.setH(dto.getH());
-        po.setLambdaGAvg(dto.getLambdaGAvg());
-        po.setPE(dto.getPE());
-        po.setPBH(dto.getPBH());
-        po.setRE(dto.getRE());
-        po.setRW(dto.getRW());
-
-        po.setFGAvg(dto.getFGAvg());
-        po.setPhi(dto.getPhi());
-        po.setLambdaWAvg(dto.getLambdaWAvg());
-        po.setKRg(dto.getKRg());
-        po.setMuG(dto.getMuG());
-        po.setBG(dto.getBG());
-        po.setCG(dto.getCG());
-        po.setSG(dto.getSG());
-        po.setDpGdt(dto.getDpGdt());
-        po.setSW(dto.getSW());
-        po.setDSWdt(dto.getDSWdt());
-        po.setTheta(dto.getTheta());
+        po = convertToPO(dto);
 
         System.out.println("生成的 PO: " + po); // 👈 打印 PO 内容
 
@@ -230,6 +202,42 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         dto.setDSWdt(po.getDSWdt());
         dto.setTheta(po.getTheta());
         return dto;
+    }
+
+    @Override
+    public WellInfoPO convertToPO(WellInfoDTO dto) {
+        WellInfoPO po = new WellInfoPO();
+        po.setWellId(dto.getWellId());
+        po.setReservoirId(dto.getReservoirId());
+        po.setCapacity(dto.getCapacity());
+        po.setWellType(dto.getWellType());
+        po.setWellCoordinates(dto.getWellCoordinates());
+        po.setSection(dto.getSection());
+        po.setMudContent(dto.getMudContent());
+
+        po.setCUnit(dto.getCUnit());
+        po.setK(dto.getK());
+        po.setH(dto.getH());
+        po.setLambdaGAvg(dto.getLambdaGAvg());
+        po.setPE(dto.getPE());
+        po.setPBH(dto.getPBH());
+        po.setRE(dto.getRE());
+        po.setRW(dto.getRW());
+
+        po.setFGAvg(dto.getFGAvg());
+        po.setPhi(dto.getPhi());
+        po.setLambdaWAvg(dto.getLambdaWAvg());
+        po.setKRg(dto.getKRg());
+        po.setMuG(dto.getMuG());
+        po.setBG(dto.getBG());
+        po.setCG(dto.getCG());
+        po.setSG(dto.getSG());
+        po.setDpGdt(dto.getDpGdt());
+        po.setSW(dto.getSW());
+        po.setDSWdt(dto.getDSWdt());
+        po.setTheta(dto.getTheta());
+
+        return po;
     }
 
 
