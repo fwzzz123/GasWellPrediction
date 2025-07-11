@@ -6,6 +6,7 @@ import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
 import com.proj.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,6 @@ public class WellController {
     private final CapacityCalculateService capacityCalculateService;
     private final WellInfoService wellInfoService;
     private final WellLogService wellLogService;
-
 
 
     //接受表单数据插入数据库
@@ -112,6 +112,7 @@ public class WellController {
 
         return ResponseEntity.ok(aof);
     }
+
 
 
 

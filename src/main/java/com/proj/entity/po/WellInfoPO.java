@@ -173,5 +173,7 @@ public class WellInfoPO implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
+    @TableField("folder_name")
+    private String folderName;
     // equals(), hashCode(), toString() 方法可自动生成或保留原有逻辑不变
 }
