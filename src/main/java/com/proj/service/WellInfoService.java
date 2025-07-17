@@ -5,6 +5,7 @@ import com.proj.entity.dto.WellInfoDTO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -24,12 +25,9 @@ public interface WellInfoService extends IService<WellInfoPO> {
     //这个函数检查ell_Las_Info的外键well_id然后根据well的缺失值，补全表Well_Las_Info的well_id的函数
     public void updateWellIds();
 
-    //这个函数检查Well_Las_Info表的well_name和Well表的well_name，然后将已有的未插入Well表的函数插入well_name字段
-    int insertMissingWells();
 
     boolean insert(WellInfoPO wellInfo);
 
-    WellInfoPO getByWellName(String wellName);
 
     void insertCurveMapping(List<WellLogCurveMappingPO> mappingList);
 
@@ -40,10 +38,10 @@ public interface WellInfoService extends IService<WellInfoPO> {
     void createWellInfo(WellInfoPO wellInfo);
 
     // 删除记录
-    void deleteWellInfo(String wellId);
+    ResponseEntity<String> deleteWellInfo(String wellId);
 
     // 更新记录
-    void updateWellInfo(WellInfoPO wellInfo);
+    boolean updateWellInfo(WellInfoPO wellInfo);
 
     // 查询单条记录
     WellInfoPO queryWellInfo(String wellId);
@@ -59,11 +57,6 @@ public interface WellInfoService extends IService<WellInfoPO> {
 
     WellInfoPO convertToPO(WellInfoDTO dto);
 
-
-        /*
-    *@陈
-    * 查询所有的井名
-    * */
     // 查询所有 well_id
     List<String> getAllWellIds();
 

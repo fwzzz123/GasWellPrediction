@@ -1,24 +1,28 @@
 package com.proj.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kingbase8.util.KSQLException;
 import com.proj.entity.dto.WellInfoDTO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
-import com.proj.entity.po.WellPO;
 import com.proj.mapper.LASMapper;
 import com.proj.mapper.WellInfoMapper;
 import com.proj.mapper.WellLasInfoMapper;
-import com.proj.mapper.WellMapper;
 import com.proj.service.WellInfoService;
 import com.proj.utils.exception.DuplicateFileNameException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,10 +41,6 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
     @Autowired
     private WellLasInfoMapper wellLasInfoMapper;
-
-    @Autowired
-    private WellMapper wellMapper;
-
     //这个函数不应该在这里。TODO mark
     @Override
     public void insertWellLAS(WellLasPO wellLasPO) {
@@ -57,44 +57,16 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         }
     }
 
+    //不该在这个service
     @Override
     public WellLasPO getById(Long id) {
         return lasMapper.getWellLASById(id);
     }
 
+    //不该在这个service
     public void updateWellIds() {
         int updatedRows = wellLasInfoMapper.updateWellIdInLasInfo();
         System.out.println("更新成功: " + updatedRows + " 行");
-    }
-
-    @Override
-    public int insertMissingWells() {
-        // 1. 获取 Well_Las_Info 表中的所有 WELL 名称
-        List<String> wellNamesFromLasInfo = wellLasInfoMapper.getAllWellNames();
-
-        // 2️. 获取 Well 表中的所有井名
-        List<String> existingWellNames = wellMapper.getAllWellNames();
-
-        // 3.  计算需要插入的井名
-        List<String> wellsToInsert = wellNamesFromLasInfo.stream()
-                .filter(wellName -> !existingWellNames.contains(wellName))
-                .collect(Collectors.toList());
-
-        // 4. 插入缺失的井数据
-        int insertedCount = 0;
-        for (String wellName : wellsToInsert) {
-            WellPO wellPO = new WellPO();
-            wellPO.setWellName(wellName);
-
-            // 使用 ON CONFLICT 防止并发插入
-            try {
-                insertedCount += wellMapper.insertWell(wellPO);
-            } catch (DataIntegrityViolationException e) {
-                // 忽略重复插入错误
-                System.out.println("井名已存在，跳过: " + wellName);
-            }
-        }
-        return insertedCount;
     }
 
 
@@ -103,11 +75,6 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
     public boolean insert(WellInfoPO wellInfo) {
         wellInfoMapper.insert(wellInfo);
         return false;
-    }
-
-    @Override
-    public WellInfoPO getByWellName(String wellName) {
-        return wellInfoMapper.getByWellName(wellName);
     }
 
     @Override
@@ -132,14 +99,91 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
     }
 
     @Override
-    public void deleteWellInfo(String wellId) {
-        wellInfoMapper.deleteByWellId(wellId);
+    public ResponseEntity<String> deleteWellInfo(String wellId) {
+        // 使用 MyBatis Plus 的 remove 方法删除
+        boolean success = this.removeById(wellId);
+
+        if (success) {
+            return ResponseEntity.ok("1"); // 表示删除成功
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("0"); // 表示未找到该记录
+        }
     }
 
     @Override
-    public void updateWellInfo(WellInfoPO wellInfo) {
-        wellInfoMapper.updateByWellId(wellInfo);
+    public boolean updateWellInfo(WellInfoPO wellInfo) {
+        if (wellInfo == null || wellInfo.getWellId() == null) {
+            return false;
+        }
+
+        UpdateWrapper<WellInfoPO> updateWrapper = new UpdateWrapper<WellInfoPO>()
+                .eq("well_id", wellInfo.getWellId());
+
+        boolean hasUpdateFields = false;
+
+        // 获取所有字段（包括父类）
+        List<Field> fields = new ArrayList<>();
+        Class<?> clazz = wellInfo.getClass();
+        while (clazz != null) {
+            fields.addAll(Arrays.asList(clazz.getDeclaredFields()));
+            clazz = clazz.getSuperclass();
+        }
+
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                Object value = field.get(wellInfo);
+
+                if (value != null && !"wellId".equals(field.getName())) {
+                    String columnName = field.getName(); // 默认使用字段名
+
+                    // 检查是否包含 @TableField 注解
+                    if (field.isAnnotationPresent(com.baomidou.mybatisplus.annotation.TableField.class)) {
+                        com.baomidou.mybatisplus.annotation.TableField tableField =
+                                field.getAnnotation(com.baomidou.mybatisplus.annotation.TableField.class);
+
+                        // 如果有自定义列名，则使用它
+                        if (!tableField.value().isEmpty()) {
+                            columnName = tableField.value();
+                        } else {
+                            // 否则使用默认的驼峰转下划线逻辑
+                            columnName = StringUtils.camelToUnderline(field.getName());
+                        }
+                    } else {
+                        // 如果没有 @TableField 注解，默认驼峰转下划线
+                        columnName = StringUtils.camelToUnderline(field.getName());
+                    }
+
+                    updateWrapper.set(columnName, value);
+                    hasUpdateFields = true;
+                }
+            } catch (IllegalAccessException ignored) {
+            }
+        }
+
+        return hasUpdateFields && wellInfoMapper.update(null, updateWrapper) > 0;
     }
+
+    // 辅助方法：驼峰转下划线
+    public static String camelToUnderline(String str) {
+        return str.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+    }
+
+    // 获取类及其父类的所有字段（包括私有字段）
+    private Field[] getAllFields(Class<?> clazz) {
+        Field[] declaredFields = clazz.getDeclaredFields();
+        Class<?> superClass = clazz.getSuperclass();
+        if (superClass != null) {
+            Field[] superFields = getAllFields(superClass);
+            Field[] combined = Arrays.copyOf(declaredFields, declaredFields.length + superFields.length);
+            System.arraycopy(superFields, 0, combined, declaredFields.length, superFields.length);
+            return combined;
+        }
+        return declaredFields;
+    }
+
+
+
 
     @Override
     public WellInfoPO queryWellInfo(String wellId) {
@@ -175,18 +219,16 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         if (po == null) return null;
         WellInfoDTO dto = new WellInfoDTO();
         dto.setWellId(po.getWellId());
-        dto.setReservoirId(po.getReservoirId());
+//        dto.setReservoirId(po.getReservoirId());
         dto.setCapacity(po.getCapacity());
         dto.setWellType(po.getWellType());
-        dto.setWellCoordinates(po.getWellCoordinates());
-        dto.setSection(po.getSection());
         dto.setMudContent(po.getMudContent());
         dto.setCUnit(po.getCUnit());
         dto.setK(po.getK());
         dto.setH(po.getH());
         dto.setLambdaGAvg(po.getLambdaGAvg());
         dto.setPE(po.getPE());
-        dto.setPBH(po.getPBH());
+        dto.setPBh(po.getPBH());
         dto.setRE(po.getRE());
         dto.setRW(po.getRW());
         dto.setFGAvg(po.getFGAvg());
@@ -201,6 +243,20 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         dto.setSW(po.getSW());
         dto.setDSWdt(po.getDSWdt());
         dto.setTheta(po.getTheta());
+        dto.setFolderName(po.getFolderName());
+
+        dto.setLogPorosity(po.getLogPorosity());
+        dto.setEffectiveHorizontalLength(po.getEffectiveHorizontalLength());
+
+        dto.setC1Content(po.getC1Content());
+        dto.setC2Content(po.getC2Content());
+        dto.setC3Content(po.getC3Content());
+        dto.setC4PlusContent(po.getC4PlusContent());
+        dto.setCO2COntent(po.getCO2Content());
+        dto.setN2Content(po.getN2Content());
+        dto.setTemperature(po.getTemperature());
+
+
         return dto;
     }
 
@@ -208,11 +264,8 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
     public WellInfoPO convertToPO(WellInfoDTO dto) {
         WellInfoPO po = new WellInfoPO();
         po.setWellId(dto.getWellId());
-        po.setReservoirId(dto.getReservoirId());
         po.setCapacity(dto.getCapacity());
         po.setWellType(dto.getWellType());
-        po.setWellCoordinates(dto.getWellCoordinates());
-        po.setSection(dto.getSection());
         po.setMudContent(dto.getMudContent());
 
         po.setCUnit(dto.getCUnit());
@@ -220,7 +273,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         po.setH(dto.getH());
         po.setLambdaGAvg(dto.getLambdaGAvg());
         po.setPE(dto.getPE());
-        po.setPBH(dto.getPBH());
+        po.setPBH(dto.getPBh());
         po.setRE(dto.getRE());
         po.setRW(dto.getRW());
 
@@ -237,8 +290,22 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         po.setDSWdt(dto.getDSWdt());
         po.setTheta(dto.getTheta());
 
+        po.setFolderName(dto.getFolderName());
+
+        // 新增字段
+        po.setLogPorosity(dto.getLogPorosity());
+        po.setEffectiveHorizontalLength(dto.getEffectiveHorizontalLength());
+        po.setC1Content(dto.getC1Content());
+        po.setC2Content(dto.getC2Content());
+        po.setC3Content(dto.getC3Content());
+        po.setC4PlusContent(dto.getC4PlusContent());
+        po.setCO2Content(dto.getCO2COntent());
+        po.setN2Content(dto.getN2Content());
+        po.setTemperature(dto.getTemperature());
         return po;
     }
+
+
 
 
     /*

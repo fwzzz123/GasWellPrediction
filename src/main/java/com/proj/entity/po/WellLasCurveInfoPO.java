@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * 
  * @TableName Well_Las_Curve_Info
  */
-@TableName(value ="Well_Las_Curve_Info")
+@TableName(value ="well_las_curve_info")
 @Data
 public class WellLasCurveInfoPO implements Serializable {
     /**

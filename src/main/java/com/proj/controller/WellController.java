@@ -6,12 +6,12 @@ import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
 import com.proj.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,9 +19,6 @@ import java.util.List;
 @RequestMapping("/well")
 @RequiredArgsConstructor
 public class WellController {
-
-    private final WellDataReceiveService wellDataReceiveService;
-    private final WellDataStorageService wellDataStorageService;
     private final CapacityCalculateService capacityCalculateService;
     private final WellInfoService wellInfoService;
     private final WellLogService wellLogService;
@@ -37,12 +34,7 @@ public class WellController {
         return result ? ResponseEntity.ok("井数据插入成功！") : ResponseEntity.status(500).body("井数据插入失败！");
     }
 
-    //这个服务检查Well_Las_Info表的well_name和Well表的well_name，然后将已有的未插入Well表的函数插入well_name字段
-    @RequestMapping("/sync-wells")
-    public ResponseEntity<String> syncWellsFromLasInfo() {
-        int insertedCount = wellInfoService.insertMissingWells();
-        return ResponseEntity.ok("Inserted " + insertedCount + " new wells.");
-    }
+
 
     //这个函数检查well_Las_Info的外键well_id然后根据well的缺失值，补全表Well_Las_Info的well_id的函数
     @PostMapping("/updateWellLasInfoWithWellID")
@@ -79,6 +71,7 @@ public class WellController {
         return ResponseEntity.ok(wellIds);
     }
 
+    //将WellInfoPO转化
     @GetMapping("/getWellInfoList")
     public ResponseEntity<List<WellInfoDTO>> getWellInfoList() {
         // 1. 获取所有井名
@@ -95,7 +88,20 @@ public class WellController {
 
         return ResponseEntity.ok(wellInfoDTOs);
     }
+    @PostMapping("/getWellInfoListByWellNames")
+    public ResponseEntity<List<WellInfoDTO>> getWellInfoListByWellNames(@RequestBody List<String> wellNames) {
+        if (wellNames == null || wellNames.isEmpty()) {
+            return ResponseEntity.ok(Collections.emptyList());
+        }
 
+        // 1. 根据井名批量查询 WellInfoPO
+        List<WellInfoPO> wellInfoPOs = wellInfoService.queryWellInfoList(wellNames);
+
+        // 2. 转换为 DTO
+        List<WellInfoDTO> wellInfoDTOs = wellInfoService.convertToWellInfoDTOList(wellInfoPOs);
+
+        return ResponseEntity.ok(wellInfoDTOs);
+    }
 
 
     //拟稳态产能公式
@@ -114,7 +120,49 @@ public class WellController {
     }
 
 
+    @PostMapping("/updateFields")
+    public ResponseEntity<String> updateWellInfoFields(@RequestBody List<WellInfoDTO> wellInfoDTOList) {
+        List<String> updateCnt = new ArrayList<>();
+        List<String> failedIds = new ArrayList<>();
 
+        if (wellInfoDTOList == null || wellInfoDTOList.isEmpty()) {
+            return ResponseEntity.badRequest().body("请求数据为空");
+        }
+        for (WellInfoDTO wellInfoDTO : wellInfoDTOList){
+            if (wellInfoDTO == null || wellInfoDTO.getWellId() == null) {
+                failedIds.add("null_dto_or_id");
+                continue;
+            }
 
+            WellInfoPO wellInfoPO = wellInfoService.convertToPO(wellInfoDTO);
+            boolean success = wellInfoService.updateWellInfo(wellInfoPO);
+
+            if (success) {
+                updateCnt.add(wellInfoDTO.getWellId());
+            } else {
+                failedIds.add(wellInfoDTO.getWellId());
+            }
+        }
+        String message = " 更新成功：" + updateCnt.size() +
+                "， 失败：" + failedIds.size() +
+                "，失败ID列表：" + failedIds;
+
+        return ResponseEntity.ok(message);
+    }
+
+    @PostMapping("/deleteWellInfo")
+    ResponseEntity<String> deletWellInfo(@RequestBody String wellId){
+        //1. 参数校验
+        if (wellId == null || wellId.isEmpty()) {
+            return ResponseEntity.badRequest().body("wellId不能为空");
+        }
+
+        ResponseEntity<String> response = wellInfoService.deleteWellInfo(wellId);
+        if (response.getStatusCode() == HttpStatus.OK && "1".equals(response.getBody())) {
+            return ResponseEntity.ok("删除成功");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("删除失败");
+        }
+    }
 
 }

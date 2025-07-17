@@ -8,7 +8,6 @@ import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLogPO;
 import com.proj.mapper.WellLasInfoMapper;
 import com.proj.mapper.WellLogMapper;
-import com.proj.mapper.WellMapper;
 import com.proj.service.WellInfoService;
 import com.proj.service.WellLasInfoService;
 import com.proj.utils.NamingUtils;
@@ -36,8 +35,6 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
     @Autowired
     private WellLasInfoMapper wellLasInfoMapper;
 
-    @Autowired
-    private WellMapper wellMapper;
 
     @Autowired
     private WellLogMapper wellLogMapper;
@@ -58,16 +55,16 @@ public class WellLasInfoServiceImpl extends ServiceImpl<WellLasInfoMapper, WellL
         if (!existing) {
             WellInfoPO wellInfo = new WellInfoPO();
             wellInfo.setWellId(wellId);
-            if (wellId.startsWith("BD")) {
-                wellInfo.setReservoirId(1);
-            } else if (wellId.startsWith("DF1-")) {
-                wellInfo.setReservoirId(2);
-            } else if (wellId.startsWith("DF13")) {
-                wellInfo.setReservoirId(3);
-            }else {
-                // 如果没有匹配到已知前缀，设置为null或默认值
-                wellInfo.setReservoirId(null); // 或者设置一个默认值如：0
-            }
+//            if (wellId.startsWith("BD")) {
+//                wellInfo.setReservoirId(1);
+//            } else if (wellId.startsWith("DF1-")) {
+//                wellInfo.setReservoirId(2);
+//            } else if (wellId.startsWith("DF13")) {
+//                wellInfo.setReservoirId(3);
+//            }else {
+//                // 如果没有匹配到已知前缀，设置为null或默认值
+//                wellInfo.setReservoirId(null); // 或者设置一个默认值如：0
+//            }
             wellInfoService.insert(wellInfo);
         }
         wellLasInfoMap.put("wellId", wellId);

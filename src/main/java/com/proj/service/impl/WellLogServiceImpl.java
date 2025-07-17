@@ -42,6 +42,9 @@ public class WellLogServiceImpl extends ServiceImpl<WellLogMatchingMapper, WellL
         // 如果不存在，则插入新记录
         WellLogPO newWellLog = new WellLogPO();
         newWellLog.setId(fileName); // 生成唯一 ID
+        newWellLog.setStartDepth(0.0);
+        newWellLog.setEndDepth(0.0);
+        newWellLog.setStep(0.0);
         wellLogMapper.insert(newWellLog);
         return newWellLog.getId();
     }

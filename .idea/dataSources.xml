@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="kingbase_Data Source - test@192.168.31.87" uuid="f2e2fdc4-530e-4508-8fd2-40b426cbbe9e">
-      <driver-ref>java.sql.Driver</driver-ref>
+    <data-source source="LOCAL" name="test" uuid="f2e2fdc4-530e-4508-8fd2-40b426cbbe9e">
       <synchronize>true</synchronize>
       <configured-by-url>true</configured-by-url>
       <jdbc-driver>com.kingbase8.Driver</jdbc-driver>
@@ -13,7 +12,6 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="test@192.168.31.87" uuid="fc858b36-6f78-4bc6-8942-d4ca0e3c39dc">
-      <driver-ref>java.sql.Driver</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
       <configured-by-url>true</configured-by-url>
@@ -26,7 +24,6 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="kingbase_Data Source - test@frp-dog.com" uuid="0b391506-509a-4e80-9f34-c5e66b01ac76">
-      <driver-ref>java.sql.Driver</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.kingbase8.Driver</jdbc-driver>
       <jdbc-url>jdbc:kingbase8://frp-dog.com:30893/test</jdbc-url>

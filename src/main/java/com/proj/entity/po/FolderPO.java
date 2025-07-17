@@ -12,7 +12,7 @@ import lombok.Data;
  * 
  * @TableName Folder
  */
-@TableName(value ="Folder")
+@TableName(value ="folder")
 @Data
 public class FolderPO implements Serializable {
     /**

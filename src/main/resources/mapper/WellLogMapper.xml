@@ -7,7 +7,7 @@
 
     <!-- 定义SQL语句 -->
     <select id="getWellLogIdByFileName" resultType="java.lang.String">
-        SELECT id FROM well_log WHERE file_name = #{fileName} LIMIT 1
+        SELECT id FROM well_log WHERE id = #{fileName} LIMIT 1
     </select>
 
     <insert id="insert" parameterType="com.proj.entity.po.WellLogPO">

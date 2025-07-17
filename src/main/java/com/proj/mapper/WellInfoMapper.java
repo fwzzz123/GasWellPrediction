@@ -20,7 +20,7 @@ public interface WellInfoMapper extends BaseMapper<WellInfoPO> {
 
     void insertWellInfo(WellInfoPO wellInfo);
 
-    void deleteByWellId(String wellId);
+    boolean deleteByWellId(String wellId);
 
     void updateByWellId(WellInfoPO wellInfo);
 

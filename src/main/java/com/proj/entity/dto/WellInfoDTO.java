@@ -9,16 +9,14 @@ import java.math.BigDecimal;
 public class WellInfoDTO {
 
     private String wellId;
-    private Integer reservoirId;
+//    private Integer reservoirId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal capacity;
 
-    private String wellType;
-    private String wellCoordinates;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private BigDecimal section;
+    private String wellType;
+
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal mudContent;
@@ -41,7 +39,7 @@ public class WellInfoDTO {
     private BigDecimal pE;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private BigDecimal pBH;
+    private BigDecimal pBh;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal rE;
@@ -84,4 +82,75 @@ public class WellInfoDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal theta;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private String folderName;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal logPorosity;
+
+    /**
+     * 水平段有效长度（Effective Horizontal Length）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal effectiveHorizontalLength;
+
+
+    /**
+     * C1含量（C1 Content）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal C1Content;
+
+    /**
+     * C2含量（C2 Content）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal C2Content;
+
+    /**
+     * C3含量（C3 Content）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal C3Content;
+
+    /**
+     * C4+含量（C4Plus Content）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal C4PlusContent;
+
+    /**
+     * CO2含量（CO2 Content）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal CO2COntent;
+
+    /**
+     * N2含量（N2 Content）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal N2Content;
+
+    /**
+     * 伪压力（Pseudo Pressure）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal pseudoPressure;
+
+    /**
+     * 温度（Temperature）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal temperature;
+
+    /**
+     * 有效渗透率（Effective Permeability）
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private BigDecimal effectivePermeability;
+
+
+
+
 }
