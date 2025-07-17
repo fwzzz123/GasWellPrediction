@@ -96,7 +96,7 @@
 
     <!-- 根据 Well_ID 删除记录 -->
     <delete id="deleteByWellId" parameterType="java.lang.String">
-        DELETE FROM Well_Info WHERE Well_ID = #{wellId}
+        DELETE FROM well_info WHERE Well_ID = #{wellId}
     </delete>
 
     <!-- 检查是否存在指定 Well_ID 的记录 -->
