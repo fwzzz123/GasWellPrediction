@@ -11,5 +11,5 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CommentUtils {
-   String value();
+   String value()  default "";
 }

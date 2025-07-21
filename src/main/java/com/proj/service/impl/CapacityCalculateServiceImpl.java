@@ -24,7 +24,7 @@ public class CapacityCalculateServiceImpl extends ServiceImpl<CapacityCalculateM
         BigDecimal cUnit = wellInfoPO.getCUnit();     // 单位转换系数
         BigDecimal k = wellInfoPO.getK();             // 渗透率 (mD)
         BigDecimal h = wellInfoPO.getH();             // 储层厚度 (m)
-        BigDecimal lambdaGAvg = wellInfoPO.getLambdaGAvg(); // 平均气体流动性 (λ̃g)
+        BigDecimal lambdaGAvg = wellInfoPO.getLambdaG(); // 平均气体流动性 (λ̃g)
         BigDecimal pE = wellInfoPO.getPE();           // 边界压力 (MPa)
         BigDecimal pBH = wellInfoPO.getPBH();         // 井底压力 (MPa)
         BigDecimal rE = wellInfoPO.getRE();           // 边界半径 (m)
