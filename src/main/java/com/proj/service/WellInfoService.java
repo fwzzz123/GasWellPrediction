@@ -70,4 +70,6 @@ public interface WellInfoService extends IService<WellInfoPO> {
     public List<FieldCommentDTO> getFieldComments();
 
     Map<String, Object> validateData(List<WellInfoPO> dataList);
+
+    List<WellInfoDTO> queryWellsByFeatures(List<String> wellIds, List<String> commentFeatures);
 }

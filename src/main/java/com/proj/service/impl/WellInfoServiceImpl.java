@@ -1,7 +1,9 @@
 package com.proj.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kingbase8.util.KSQLException;
@@ -10,9 +12,11 @@ import com.proj.entity.dto.WellInfoDTO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
 import com.proj.entity.po.WellLogCurveMappingPO;
+import com.proj.mapper.FolderPOMapper;
 import com.proj.mapper.LASMapper;
 import com.proj.mapper.WellInfoMapper;
 import com.proj.mapper.WellLasInfoMapper;
+import com.proj.service.FolderPOService;
 import com.proj.service.WellInfoService;
 import com.proj.utils.CommentUtils;
 import com.proj.utils.exception.DuplicateFileNameException;
@@ -42,6 +46,10 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
     @Autowired
     private WellLasInfoMapper wellLasInfoMapper;
+
+    @Autowired
+    private FolderPOService folderPOService;
+
     //这个函数不应该在这里。TODO mark
     @Override
     public void insertWellLAS(WellLasPO wellLasPO) {
@@ -242,6 +250,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
         dto.setWellId(po.getWellId());
         dto.setCapacity(po.getCapacity());
+        dto.setCapacityInit(po.getCapacityInit());
         dto.setWellType(po.getWellType());
         dto.setMudContent(po.getMudContent());
         dto.setCUnit(po.getCUnit());
@@ -304,6 +313,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
         // 新增岩石物理字段转换
         dto.setRadiusCapillary(po.getRadiusCapillary());
+        dto.setFactorSkin(po.getFactorSkin());
 
         return dto;
     }
@@ -313,6 +323,7 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         WellInfoPO po = new WellInfoPO();
         po.setWellId(dto.getWellId());
         po.setCapacity(dto.getCapacity());
+        po.setCapacityInit(dto.getCapacityInit());
         po.setWellType(dto.getWellType());
         po.setMudContent(dto.getMudContent());
 
@@ -379,16 +390,10 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
 
         // 岩石物理参数
         po.setRadiusCapillary(dto.getRadiusCapillary());
+        po.setFactorSkin(dto.getFactorSkin());
         return po;
     }
 
-
-
-
-    /*
-    * @陈
-    * 返回所有井名
-    * */
     @Override
     public List<String> getAllWellIds() {
         return wellInfoMapper.selectAllWellIds();
@@ -420,30 +425,36 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         result.put("hasError", false);
         result.put("message", "");
 
+        List<String> warnings = new ArrayList<>(); // 用于收集非阻断性提示
 
-        Set<String> invalidFolders = new HashSet<>();
 
         for (WellInfoPO po : poList) {
             // 校验井ID
             if (po.getWellId() == null || po.getWellId().trim().isEmpty()) {
-                return errorResult("存在空井ID");
+                return errorResult("存在空井名");
             }
             if (existsByWellId(po.getWellId())) {
-                return errorResult("井ID重复: " + po.getWellId());
+                return errorResult("井名重复: " + po.getWellId());
             }
-
-            // 校验文件夹
-            if (po.getFolderName() == null || po.getFolderName().trim().isEmpty()) {
-                return errorResult("文件夹名为空");
-            }
-            if (!existsByFolderName(po.getFolderName())) {
-                invalidFolders.add(po.getFolderName());
-            }
-
             // 校验关键字段
-            if (po.getCapacity() == null || po.getWellType() == null) {
-                return errorResult("产能或井型不能为空");
+//            if (po.getCapacity() == null || po.getWellType() == null) {
+//                return errorResult("产能或井型不能为空");
+//            }
+            // 校验文件夹
+            if (po.getFolderName() == null ) {
+                String defaultFolder = "default_folder";
+                po.setFolderName(defaultFolder); // 自动设置默认文件夹
+                warnings.add("井 " + po.getWellId() + " 被放入默认文件夹: " + defaultFolder);
+
             }
+            // 校验文件夹是否存在（如果文件夹非空）
+            else if (po.getFolderName() != null && !folderPOService.existsByFolderName(po.getFolderName()) ) {
+                return errorResult("对于井 " + po.getWellId() +" ，文件夹 " + po.getFolderName() + " 不存在，请修改文件名");
+            }
+        }
+
+        if (!warnings.isEmpty()) {
+            result.put("warnings", warnings);
         }
 
 //        if (!invalidFolders.isEmpty()) {
@@ -457,6 +468,72 @@ public class WellInfoServiceImpl extends ServiceImpl<WellInfoMapper, WellInfoPO>
         result.put("hasError", true);
         result.put("message", message);
         return result;
+    }
+
+
+    @Override
+    public List<WellInfoDTO> queryWellsByFeatures(List<String> wellIds, List<String> commentFeatures) {
+
+        // 1. 构建查询条件
+        QueryWrapper<WellInfoPO> queryWrapper = new QueryWrapper<>();
+
+        // 添加井ID条件
+        queryWrapper.in("well_id", wellIds);
+
+        // 2. 如果提供了特征列表，则筛选包含这些特征的井
+        if (!CollectionUtils.isEmpty(commentFeatures)) {
+            // 根据注解获取对应的字段名
+            List<String> fieldNames = getFieldNamesByCommentFeatures(commentFeatures);
+
+            // 添加字段不为空条件
+            if (!CollectionUtils.isEmpty(fieldNames)) {
+                fieldNames.forEach(fieldName -> {
+                    // 使用数据库字段名而不是Java字段名
+                    String dbFieldName = getDbFieldName(fieldName);
+                    queryWrapper.isNotNull(dbFieldName);
+                });
+            }
+            // 如果没有匹配的字段，则返回空列表
+            else {
+                return Collections.emptyList();
+            }
+        }
+        // 3. 如果没有提供特征列表，则返回所有指定井的信息
+
+        // 4. 执行查询
+        List<WellInfoPO> wellInfoPOs = wellInfoMapper.selectList(queryWrapper);
+
+        return convertToWellInfoDTOList(wellInfoPOs);
+    }
+
+    //转化注解
+    private List<String> getFieldNamesByCommentFeatures(List<String> commentFeatures) {
+        return Arrays.stream(WellInfoDTO.class.getDeclaredFields())
+                .filter(field -> {
+                    CommentUtils annotation = field.getAnnotation(CommentUtils.class);
+                    return annotation != null && commentFeatures.contains(annotation.value());
+                })
+                .map(Field::getName)
+                .collect(Collectors.toList());
+    }
+
+    // 添加辅助方法：获取字段对应的数据库字段名
+    private String getDbFieldName(String fieldName) {
+        try {
+            Field field = WellInfoPO.class.getDeclaredField(fieldName);
+            if (field.isAnnotationPresent(com.baomidou.mybatisplus.annotation.TableField.class)) {
+                com.baomidou.mybatisplus.annotation.TableField tableField =
+                        field.getAnnotation(com.baomidou.mybatisplus.annotation.TableField.class);
+                if (!tableField.value().isEmpty()) {
+                    return tableField.value();
+                }
+            }
+            // 如果没有@TableField注解或没有指定value，则使用驼峰转下划线
+            return StringUtils.camelToUnderline(fieldName);
+        } catch (NoSuchFieldException e) {
+            // 如果找不到字段，使用默认转换
+            return StringUtils.camelToUnderline(fieldName);
+        }
     }
 
 //这里有逻辑错误，在这个时候ID还没有被插入，所以不存在ID

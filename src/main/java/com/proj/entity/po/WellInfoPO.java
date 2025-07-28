@@ -31,6 +31,9 @@ public class WellInfoPO implements Serializable {
     @TableField("absolute_open_flow")
     private BigDecimal capacity;
 
+    @TableField("absolute_open_flow_init")
+    private BigDecimal capacityInit;
+
     /**
      * 井类型
      */
@@ -372,5 +375,8 @@ public class WellInfoPO implements Serializable {
      */
     @TableField("radius_capillary")
     private BigDecimal radiusCapillary;
+
+    @TableField("factor_skin")
+    private BigDecimal factorSkin;
 
 }

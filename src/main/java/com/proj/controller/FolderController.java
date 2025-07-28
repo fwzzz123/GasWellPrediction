@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,21 +26,31 @@ public class FolderController {
     private WellInfoService wellInfoService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addFolder(@RequestParam String folderName) {
+    public ResponseEntity<String> addFolder(@RequestBody Map<String, String> request) {
+        // 1. 从 JSON 请求中获取 folderName
+        String folderName = request.get("folderName");
+
+        // 2. 打印原始接收值用于调试
+        System.out.println("实际接收到的值：" + folderName);
+
+        // 3. 校验参数
         if (folderName == null || folderName.trim().isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("文件夹名称不能为空");
         }
 
+        // 4. 检查文件夹是否已存在
         if (folderPOService.existsByFolderName(folderName)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("文件夹已存在");
         }
 
+        // 5. 创建并保存文件夹对象
         FolderPO folderPO = new FolderPO();
         folderPO.setFolderName(folderName);
         folderPOService.save(folderPO);
 
         return ResponseEntity.ok("添加成功");
     }
+
 
     //获取所有文件夹名
     @GetMapping("/getAll")
