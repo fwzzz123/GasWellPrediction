@@ -1,6 +1,7 @@
 package com.proj.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.proj.entity.dto.FieldCommentDTO;
 import com.proj.entity.dto.WellInfoDTO;
 import com.proj.entity.po.WellInfoPO;
 import com.proj.entity.po.WellLasPO;
@@ -8,6 +9,7 @@ import com.proj.entity.po.WellLogCurveMappingPO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
 * @author L
@@ -34,6 +36,8 @@ public interface WellInfoService extends IService<WellInfoPO> {
     // 查询是否存在记录
     boolean existsByWellId(String wellId);
 
+    public boolean existsByFolderName(String folderName);
+
     // 新增记录
     void createWellInfo(WellInfoPO wellInfo);
 
@@ -53,6 +57,8 @@ public interface WellInfoService extends IService<WellInfoPO> {
 
     List<WellInfoDTO> convertToWellInfoDTOList(List<WellInfoPO> wellInfoPOs) ;
 
+    List<WellInfoPO> convertToWellInfoPOList(List<WellInfoDTO> wellInfoDTOs);
+
     WellInfoDTO convertToDTO(WellInfoPO po);
 
     WellInfoPO convertToPO(WellInfoDTO dto);
@@ -60,5 +66,10 @@ public interface WellInfoService extends IService<WellInfoPO> {
     // 查询所有 well_id
     List<String> getAllWellIds();
 
+    //查询所有标准化表头
+    public List<FieldCommentDTO> getFieldComments();
 
+    Map<String, Object> validateData(List<WellInfoPO> dataList);
+
+    List<WellInfoDTO> queryWellsByFeatures(List<String> wellIds, List<String> commentFeatures);
 }
