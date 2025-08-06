@@ -82,6 +82,17 @@
       <artifactId>jedis</artifactId>
     </dependency>
 
+    <!-- 添加 OAuth2 依赖 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
+
+    <!-- Spring Security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
 
   </dependencies>
 
