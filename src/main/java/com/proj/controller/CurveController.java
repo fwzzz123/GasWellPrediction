@@ -27,4 +27,5 @@ public class CurveController {
     public List<WellLasCurveInfoPO> getCurveByLasInfoId(@RequestParam("lasInfoId") String lasInfoId){
         return wellLasCurveInfoService.getCurveByLasInfoId(lasInfoId);
     }
+    
 }
