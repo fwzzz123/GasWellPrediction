@@ -190,20 +190,23 @@ public class WellController {
         return ResponseEntity.ok(message);
     }
 
-    @PostMapping("/deleteWellInfo")
-    ResponseEntity<String> deletWellInfo(@RequestBody String wellId){
+    @PostMapping("/deleteWellInfos")
+    public ResponseEntity<String> deletWellInfo(@RequestBody List<String> wellIds) {
         //1. 参数校验
-        if (wellId == null || wellId.isEmpty()) {
-            return ResponseEntity.badRequest().body("wellId不能为空");
+        if (wellIds == null || wellIds.isEmpty()) {
+            return ResponseEntity.badRequest().body("wellIds不能为空");
         }
 
-        ResponseEntity<String> response = wellInfoService.deleteWellInfo(wellId);
-        if (response.getStatusCode() == HttpStatus.OK && "1".equals(response.getBody())) {
-            return ResponseEntity.ok("删除成功");
+        // 调用Service层进行批量删除
+        boolean success = wellInfoService.removeByIds(wellIds);
+
+        if (success) {
+            return ResponseEntity.ok("删除成功，共删除" + wellIds.size() + "条记录");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("删除失败");
         }
     }
+
 
     @GetMapping("/download-template")
     public void downloadTemplate(HttpServletResponse response) throws IOException {
