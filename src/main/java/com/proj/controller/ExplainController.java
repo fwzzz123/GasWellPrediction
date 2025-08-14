@@ -6,6 +6,7 @@ import com.proj.service.WellExplanationsPOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -34,7 +35,8 @@ public class ExplainController {
         return response;
     }
     @GetMapping("/hello")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public String helloHttps() {
-        return "hellohttps";
+        return "Hello, this is a protected resource for ADMIN only!";
     }
 }

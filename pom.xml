@@ -60,18 +60,12 @@
       <version>3.3.2</version> <!-- 请使用最新稳定版本 -->
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>cn.com.xuxiaowei.boot</groupId>-->
-<!--      <artifactId>spring-security-oauth2-authorization-server-redis</artifactId>-->
-<!--      <version>2.0.0</version>-->
-<!--      <type>pom</type>-->
-<!--    </dependency>-->
-
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.boot</groupId>-->
-<!--      <artifactId>spring-boot-starter-security</artifactId>-->
-<!--    </dependency>-->
-
+    <!-- 【核心修改】新增此依赖，它会启用 Spring Session 对 Redis 的支持 -->
+    <!-- 它负责将 HttpSession 的内容自动存储到 Redis 中 -->
+    <dependency>
+      <groupId>org.springframework.session</groupId>
+      <artifactId>spring-session-data-redis</artifactId>
+    </dependency>
 
 
     <dependency>
@@ -102,6 +96,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
+
+    <!-- Spring Boot OAuth2 Client -->
+    <!-- 这个依赖提供了发起登录和处理重定向的核心功能 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-client</artifactId>
     </dependency>
 
     <!-- Spring Security -->
