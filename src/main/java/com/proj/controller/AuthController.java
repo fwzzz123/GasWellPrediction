@@ -1,32 +1,25 @@
 package com.proj.controller;
 
-import com.proj.entity.po.WellLasCurveInfoPO;
-import com.proj.service.WellLasCurveInfoService;
-import com.proj.service.WellLasInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/curve")
 @CrossOrigin
-public class CurveController {
-
-    @Autowired
-    private WellLasInfoService wellLasInfoService;
-
-    @Autowired
-    private WellLasCurveInfoService wellLasCurveInfoService;
-
-    //根据lasInfoId外键查询curve信息
-    @RequestMapping("getCurveByLasInfoId")
-    public List<WellLasCurveInfoPO> getCurveByLasInfoId(@RequestParam("lasInfoId") String lasInfoId){
-        return wellLasCurveInfoService.getCurveByLasInfoId(lasInfoId);
+public class AuthController {
+    @GetMapping("/explain/hello")
+    // 方式2：使用 hasRole（会自动添加 ROLE_ 前缀）
+    @PreAuthorize("hasRole('ADMIN')")
+    public String helloHttps() {
+        return "Hello, this is a protected resource for ADMIN only!";
     }
     @GetMapping("/hello")
     public String hello(@AuthenticationPrincipal Jwt jwt) {

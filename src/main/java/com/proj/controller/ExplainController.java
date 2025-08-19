@@ -34,9 +34,5 @@ public class ExplainController {
         response.put("code", 0);
         return response;
     }
-    @GetMapping("/hello")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-    public String helloHttps() {
-        return "Hello, this is a protected resource for ADMIN only!";
-    }
+
 }
