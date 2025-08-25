@@ -6,6 +6,7 @@ server:
     key-store-type: JKS
     key-store-password: 123456
     key-store: classpath:boothttps.jks
+  max-http-header-size: 32KB
 
 spring:
 
@@ -32,8 +33,11 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9000
-
+#          issuer-uri: https://127.0.0.1:9000
+#          issuer-uri: http://192.168.3.33:9000
+          issuer-uri: https://frp-dog.com:26390
+#          jwk-set-uri: https://127.0.0.1:9000/oauth2/jwks
+#          issuer-uri: https://localhost:9000
       client:
         registration:
           oidc-client:
@@ -48,9 +52,17 @@ spring:
             scope: openid, profile, read, write
         provider:
           spring-auth-server:
-            authorization-uri: http://localhost:9000/oauth2/authorize
-            token-uri: http://localhost:9000/oauth2/token
-            jwk-set-uri: http://localhost:9000/oauth2/jwks
+#            authorization-uri: http://192.168.3.33:9000/oauth2/authorize
+#            token-uri: http://192.168.3.33:9000/oauth2/token
+#            jwk-set-uri: http://192.168.3.33:9000/oauth2/jwks
+
+#            authorization-uri: https://localhost:9000/oauth2/authorize
+#            token-uri: https://localhost:9000/oauth2/token
+#            jwk-set-uri: https://localhost:9000/oauth2/jwks
+
+            authorization-uri: https://frp-dog.com:26390/oauth2/authorize
+            token-uri: https://frp-dog.com:26390/oauth2/token
+            jwk-set-uri: https://frp-dog.com:26390/oauth2/jwks
 
   datasource:
     driver-class-name: com.kingbase8.Driver
